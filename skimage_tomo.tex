@@ -77,7 +77,7 @@
 %\def\includegraphics{}
 
 \definecolor{listinggray}{gray}{0.1}
-\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.92,0.95}
 \lstset{
 	backgroundcolor=\color{lbcolor},
 	tabsize=4,
@@ -282,8 +282,8 @@ Text for this section.
 
 The acquisition time of synchrotron tomography images has decreased
 dramatically over the last decade, from hours to
-seconds~\cite{Maire2014}. New modalities such as single-bunch
-imaging~\cite{Rack2014} provide a time resolution down to the nanosecond
+seconds~\citep{Maire2014}. New modalities such as single-bunch
+imaging~\citep{Rack2014} provide a time resolution down to the nanosecond
 for radiography. However, the time subsequently spent in processing the
 images has not decreased as much, so that the outcome of a successful
 synchrotron imaging campaign often takes weeks or even months to be
@@ -292,7 +292,7 @@ transformed into scientific results.
 Transforming billions of pixels and voxels to a few meaningful figures
 represents a tremendous data reduction. Often, the sequence of operations
 needed to produce these data is not known beforehand, or might be altered
-due to artifacts~\cite{Marone2010}, or to an unforeseen evolution of
+due to artifacts~\citep{Marone2010}, or to an unforeseen evolution of
 the sample. Image processing necessarily involves trial and error phases
 to choose the processing workflow. Therefore, image processing tools need
 to offer at the same time enough flexibility of use, a variety of
@@ -300,29 +300,30 @@ algorithms, and efficient implementations to allow for fast iterations
 while adjusting the workflow.
 
 Several software applications and libraries are available to synchrotron
-users to process their images. ImageJ~\cite{Abramoff2004, Schneider2012}
-and its distribution Fiji~\cite{Schindelin2012} is a popular tool for 2-D
-and 3-D images, thanks to its intuitive menus and graphical tools, and
-the wealth of plugins contributed by a vivid
-community~\cite{Schindelin2015}. For 3-D images, commercial tools such as
-Avizo 3D software (TM) are appreciated for an intuitive graphical
+users to process their images. ImageJ~\citep{Abramoff2004, Schneider2012}
+and its distribution Fiji~\citep{Schindelin2012} is a popular tool for
+2-D and 3-D images, thanks to its intuitive menus and graphical tools,
+and the wealth of plugins contributed by a vivid
+community~\citep{Schindelin2015}. For 3-D images, commercial tools such
+as Avizo 3D software (TM) are appreciated for an intuitive graphical
 pipeline and advanced 3D visualization. Alternatively, the use of a
 programming language gives finer control and more possibilities, provided
 classical processing algorithms can be called from libraries -- hence
-limiting the programming task and the risk of bugs. Matlab (TM) and its image
-processing toolbox are popular in the academic community of computer
-vision and image processing. The Python language is widely used in the
-scientific world and in synchrotron facilitiies. As a general-purpose
-language, Python is used in synchrotrons for controlling device
-servers~\cite{pytango}, reconstructing tomography volumes from
-radiographies~\cite{Gursoy2014, Mirone2014}, and various data processing
-packages for macromolecular cristallography~\cite{Adams2010} or
-fluorescence analysis~\cite{pymca}.
+limiting the programming task and the risk of bugs. Matlab (TM) and its
+image processing toolbox are popular in the academic community of
+computer vision and image processing. The Python language is widely used
+in the scientific world and in synchrotron facilitiies. As a
+general-purpose language, Python is used in synchrotrons for controlling
+device servers~\citep{pytango}, reconstructing tomography volumes from
+radiographies~\citep{Gursoy2014, Mirone2014}, and various data
+processing packages for macromolecular cristallography~\citep{Adams2010},
+azimuthal integration of diffraction data~\citep{Ashiotis2015} or
+fluorescence analysis~\citep{pymca}.
 
-\texttt{scikit-image}~\cite{Vanderwalt2014} is a general-purpose image
+\texttt{scikit-image}~\citep{Vanderwalt2014} is a general-purpose image
 processing library for the Python language, and a component of the ecosystem of
 Python scientific modules commonly known as Scientific
-Python~\cite{Oliphant2007}. Like the rest of the ecosystem,
+Python~\citep{Oliphant2007}. Like the rest of the ecosystem,
 \texttt{scikit-image} is released under a permissive open-source license and is
 available free of charge. \texttt{scikit-image} is compatible with both 2-D and
 3-D images, so that it can be used for a large number of imaging modalities,
@@ -345,7 +346,7 @@ interpreter, or written in text files (scripts) that are executed.
 Image are manipulated as numerical arrays of uniform
 data type, a format that guarantees a fast access to the computer memory. The
 n-dimensional (2-D, 3-D, \dots) numerical array object is provided by the
-\texttt{NumPy} module~\cite{Vanderwalt2011}.
+\texttt{NumPy} module~\citep{Vanderwalt2011}.
 
 In image processing, one of the first tasks is therefore to generate
 \texttt{NumPy} arrays, which is often done by reading data from files. Let us
@@ -378,7 +379,7 @@ Raw data formats can be opened using the \texttt{NumPy} functions \texttt{fromfi
 
 The benefits of \texttt{scikit-image} for image processing come not only
 from the features of the package alone, but also from the rich
-environment of Scientific Python~\cite{Oliphant2007, Perez2011}.
+environment of Scientific Python~\citep{Oliphant2007, Perez2011}.
 Fig.~\ref{fig:ecosystem} illustrates how several components of this
 ecosystem are used for a typical image processing workflow. 
 
@@ -386,7 +387,7 @@ ecosystem are used for a typical image processing workflow.
 
 While several interpreters are available to execute interactively Python
 instructions and scripts, the most popular one in the scientific world is
-the IPython interpreter~\cite{Perez2007, Rossant2015}. IPython is an
+the IPython interpreter~\citep{Perez2007, Rossant2015}. IPython is an
 advanced interpreter, which integrates for example a debugger,
 introspection and profiling methods, and online help. Several IDEs
 (Integrated Development Environment) integrate the IPython interpreter,
@@ -400,27 +401,61 @@ is a popular IDE (see Fig.~\ref{fig:spyder}).
   should go here. \label{fig:spyder}}
 \end{figure*}
 
-The Jupyter notebook~\cite{Kluyver2016} is a web application which has
+The Jupyter notebook~\citep{Kluyver2016} is a web application which has
 grown from the IPython project, although the two projects have now
 diverged. Jupyter notebooks provide an interactive development
 environment within an Internet browser, where live code can be enriched
 by explanatory text, equations and visualizations (figure or not??). 
 
-\paragraph{NumPy arrays}
+\paragraph{NumPy arrays} are the cornerstone of the Scientific Python
+ecosystem, and of \texttt{scikit-image} operations in particular.
+Cropping or downsampling an image, or retrieving pixels corresponding to
+a given label in a segmentation are all one-liners NumPy code. To
+illustrate the compactness of NumPy code, modifying pixels values below a
+threshold can be written as
+\begin{lstlisting}
+im[im < 0.5] = 0
+\end{lstlisting}
+using the possibility to index arrays with boolean arrays, called
+\emph{masking}. Also, \texttt{NumPy} uses memory sparingly and avoids
+making new copies of arrays whenever possible, which is a important
+requirement when dealing with the gigabyte-sized images of tomography.
+For example, cropping a subvolume as follows does not create a copy of the
+original array:
+\begin{lstlisting}
+sub_volume = im[100:-100, 100:-100, 100:-100]
+\end{lstlisting}
 
-- advanced operations in a compact form, at minimal memory consumption
 
-- slicing to reduce memory cost
 
-- nD : 2D, 3D, ...
+\paragraph{Visualization libraries.}
 
-\paragraph{Visualization libraries}
+Visualizing images is an important component of the image processing
+workflow, in order to verify the final result and to adjust the
+parameters of intermediate processing operations.
+\texttt{matplotlib}~\citep{Hunter2007} is the most popular 2D plotting
+library of the Python ecosystem. It can be used to visualize 2D data such
+as color or grayscale images, and 1D data such as contour lines, outlines
+of segmented regions, histograms of gray levels, etc. Although
+\texttt{matplotlib} has simple 3D plotting capabilities, it is
+recommended to use the \texttt{mayavi} module~\citep{Ramachandran2011}
+for applications requiring advanced 3D visualization, such as tomography. 
+\texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
+visualizing data passed as \texttt{numpy} arrays. For more advanced
+visualizations, a large majority of VTK capabilities can be accessed
+thanks to a pipeline API. A visualization pipeline can be designed either
+using the pipeline API, or graphically in the pipeline window.
+\texttt{mayavi} offers a good trade-off between simplicity of use for
+common operations, and more advanced possibilities, including responsive
+visualizations.
 
-\paragraph{Advanced toolkits for signal processing and data science}
+speak about skimage's visualizer as well?
+
+\paragraph{Advanced toolkits for signal processing and data science.}
 
 \texttt{scikit-image} is only one Python module that can be used for data
 processing, among many others. A very popular module is
-\texttt{scikit-learn}~\cite{Pedregosa2011}, a Python module for machine
+\texttt{scikit-learn}~\citep{Pedregosa2011}, a Python module for machine
 learning using \texttt{NumPy} arrays. If local features of an image
 (such as local statistics of gray levels, or geometric points of
 interest), or features of segmented objects (e.g. geometrical and
@@ -442,12 +477,12 @@ by different teams.
 
 \section*{Image processing capabilities}
 
-\begin{figure}
-    \centerline{\includegraphics[width=0.99\columnwidth]{mayavi_porous}}
+\begin{figure*}
+    \centerline{\includegraphics[width=0.99\textwidth]{tomo_gallery}}
 \caption{\csentence{Sample figure title.}
       A short description of the figure content
       should go here.}
-\end{figure}
+\end{figure*}
 
 \paragraph{Performance}
 
@@ -457,7 +492,7 @@ The success of a software package aimed at end-users is strongly
 correlated to the quality of its documentation (find citation).
 \texttt{scikit-image} users have access to different kinds of
 documentation. Functions of the API (define API here or above) are all
-documented using the same standard~\cite{Pawlik2015} as other major
+documented using the same standard~\citep{Pawlik2015} as other major
 Scientific Python packages. The standard include a description of all
 input and output variables and their data type, together with
 explainations on what the function does and how to use it. Functions
@@ -471,9 +506,9 @@ environment (IPython, Spyder, Jupyter Notebook...).
 \end{figure*}
 
 In addition, a popular documentation tool is the graphical gallery of
-examples (url), a part of which is displayed in Fig.~\ref{fig:gallery}.
+examples (\url{http://scikit-image.org/docs/dev/auto_examples/}), a part of which is displayed in Fig.~\ref{fig:gallery}.
 The principle of the gallery is to accelerate the learning curve of image
-processing, by displaying graphical examples of image processing
+processing, by showcasing graphical examples of image processing
 operations. Such examples are organized as an array of thumbnails with a
 short title (see Fig.~\ref{fig:gallery} left). Thumbnails are links to
 the webpage of the corresponding example, which features a mini-tutorial
@@ -487,8 +522,10 @@ Longer tutorials and a more narrative documentation is available as well
 in the User Guide of \texttt{scikit-image}. The User Guide explains in
 particular...
 
-Finally, tutorials on \texttt{scikit-image} are available in various places,
-either as YouTube videos, or in the SciPy Lecture Notes~\cite{scipylecturenotes}, a comprehensive online book of Scientific Python tutorials.  
+Finally, tutorials on \texttt{scikit-image} are available in various
+places, either as YouTube videos, or in the SciPy Lecture
+Notes~\citep{scipylecturenotes}, a comprehensive online book of Scientific
+Python tutorials.  
 
 \section*{Development and use of scikit-image}
 
@@ -508,16 +545,18 @@ and Africa representing a much smaller fraction of visitors).
 \paragraph{Development process.}
 
 \texttt{scikit-image} is developed by a diverse team of volunteers, with
-more than 170 developers that have contributed to the package. The
+more than 170 developers that have contributed to the package. The large
+number of developers and users is a key element of the sustainability of
+\texttt{scikit-image}. The
 development process takes place on the GitHub platform
 \url{https://github.com/scikit-image/scikit-image}, where users and
 developers propose and discuss new contributions, or report bugs or ideas
 for improvements.
 A release cycle of one or two releases every year
-ensures that new features are proprosed to users on a regular basis.
+ensures that new features are proposed to users on a regular basis.
 
 
-
+\section*{Conclusion}
 
 
 
@@ -530,8 +569,9 @@ ensures that new features are proprosed to users on a regular basis.
 \begin{backmatter}
 
 \section*{Competing interests}
-  The authors declare that they have no competing interests.
-
+: The authors declare that the research was conducted
+in the absence of any commercial or financial relationships that could be
+construed as a potential conflict of interest.
 
 \section*{Acknowledgements}
   
@@ -561,7 +601,7 @@ The authors gratefully acknowledge the work of the contributors of
 % a) write to bib file (bmc-mathphys only)
 % @settings{label, options="nameyear"}
 % b) uncomment next line
-\nocite{label}
+%\nocite{label}
 
 % or include bibliography directly:
 % \begin{thebibliography}
