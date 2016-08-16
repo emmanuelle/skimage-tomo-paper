@@ -103,6 +103,8 @@
 
 %%% Put your definitions there:
 \startlocaldefs
+\newcommand{\emma}[1]{{\color{blue}{#1}}}
+
 \endlocaldefs
 
 
@@ -314,7 +316,8 @@ image processing toolbox are popular in the academic community of
 computer vision and image processing. The Python language is widely used
 in the scientific world and in synchrotron facilities. As a
 general-purpose language, Python is used in synchrotrons to control
-device servers~\citep{pytango}, to reconstruct tomography volumes from
+device servers~\citep{pytango}, to access raw data of X-ray
+detectors~\citep{Knudsen2013}, to reconstruct tomography volumes from
 radiographs~\citep{Gursoy2014, Mirone2014}, and in data
 processing packages for macromolecular cristallography~\citep{Adams2010},
 azimuthal integration of diffraction data~\citep{Ashiotis2015} or
@@ -501,7 +504,38 @@ encountered in materials science~\citep{Bouttes2015}. Conversely, images
 with a fine-grained texture are better preserved with non-local means
 denoising~\citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
 
+\emma{Insert paragraph on features detection here? Juan?} Diffraction
+peaks in 2D diffraction images can be extracted using blob detection
+methods~\citep{Ashiotis2015}, such as the Laplacian of Gaussian method
+(see Fig.~\ref{fig:tomo_gallery}).
 
+Segmentation of regions of interest can be achieved using different
+strategies, depending on the characteristics of the image. Images with a
+clear contrast between regions can be segmented automatically thanks to
+several thresholding algorithms, including an adaptive local thresholding
+algorithm aimed at images with contrast variations. Super-pixel
+algorithms~\citep{Felzenszwalb2004, Achanta2012} (see
+Fig.~\ref{fig:tomo_gallery}) create an over-segmentation of images in
+super-pixels, by grouping pixels that are close together both in color-
+and direct space. Region-growing algorithms, such as the morphological
+watershed or the random walker~\citep{Grady2006}, propagate the labels
+of user-defined markers through the image (see
+Fig.~\ref{fig:tomo_gallery}). The active contour
+algorithm~\citep{Kass1988} fits snake contours to features of the
+image, such as edges or high-brightness regions.
+
+The characteristics of labeled regions (particles, porosities, organs,
+\dots) resulting from a segmentation can be measured using the
+\texttt{measure} submodule. The different connected components (e.g.
+bubbles or non-touching particles) of a binary image are labeled with the
+\texttt{measure.label} function. Properties of labeled regions such as
+size, extent, center of mass or mean intensity value are accessed with
+\texttt{measure.regionprops} (see Fig.~\ref{fig:tomo_gallery}). Local
+characteristics of a region can be retrieved as well:
+Fig.~\ref{fig:tomo_gallery} shows how the local diameter of open
+porosity is measured by combining a skeletonization of the porosity
+channels, and the distance transform to the other phase measured on the
+skeleton.   
 
 \paragraph{Performance}
 
