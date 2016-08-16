@@ -537,7 +537,60 @@ porosity is measured by combining a skeletonization of the porosity
 channels, and the distance transform to the other phase measured on the
 skeleton.   
 
-\paragraph{Performance}
+\paragraph{Performance.}
+
+Given the large size of tomography datasets, the speed of execution of image
+processing operations is a critical issue. \texttt{scikit-image} relies mostly
+on calls to \texttt{NumPy} operations, with most of them that are performed in
+optimized compiled code (C or Fortran). Performance-critical parts of the code
+that cannot call efficient \texttt{NumPy} code are implemented in
+\texttt{Cython}. \texttt{Cython}~\citep{Behnel2011} is an extension of the
+Python language that supports explicit type declarations, and is compiled
+directly to C. 
+
+However, basic \texttt{scikit-image} code runs on a single core. Computing
+workstations and servers used for X-ray imaging typically have several tens of
+cores. Parallelization of the computing workflow can be achieved in different
+ways. The most trivial parallelization scheme consists in applying the same
+workflow to different images, on different cores. However, finer-grained
+parallelization is preferable when prototyping the processing workflow.
+
+
+
+\emma{Juan or Stéfan, can you add something about dask?}
+
+Prototyping the image processing workflow requires several trial and error
+executions of scripts containing different operations. The \texttt{joblib}
+module provides a caching mechanism that avoids the repetition of function
+calls, if their arguments have not changed:
+\begin{lstlisting}
+>>> from skimage import filters, data
+>>> from joblib import Memory
+>>> mem = Memory(cachedir='/tmp/joblib')
+>>> median = mem.cache(filters.median)
+>>> im = data.camera()
+>>> filtered_im = median(im, np.ones((3, 3)))
+__________________________
+[Memory] Calling skimage.filters.rank.generic.median...
+median(array([[156, ..., 152],
+       ..., 
+       [121, ..., 111]], dtype=uint8), array([[ 1.,  1.,  1.],
+       [ 1.,  1.,  1.],
+       [ 1.,  1.,  1.]]))
+__________________________median - 0.0s, 0.0min
+>>> filtered_again = median(im, np.ones((3, 3)))
+>>> # the above call did not trigger an evaluation
+\end{lstlisting}
+
+Finally, let us note that the biggest performance improvements often come from
+the improvement of algorithms (as opposed to computing architectures only). For
+example, non-local means denoising~\citep{Buades2005} is a costly operation,
+since it requires several nested loops, on all pixels and on neighboring
+patches to be compared with the pixel-centered patch. Thanks to the
+implementation of a more recent algorithm~\citep{Darbon2008} that modifies the
+internal organization of loops, it was possible to gain a factor of 5 to 10.
+The large size of the \texttt{scikit-image} community ensures that possible
+algorithmic improvements are discussed regularly.
 
 \section*{Documentation and getting help}
 
