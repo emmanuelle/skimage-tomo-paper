@@ -151,7 +151,7 @@ processing}
 \author[
    addressref={aff3},
    email={stefanv@berkeley.edu}
-]{\fnm{Stéfan} \snm{Van der Walt}}
+]{\fnm{Stéfan} \snm{van der Walt}}
 
 
 
@@ -171,10 +171,10 @@ processing}
   \cny{France}                                    % country
 }
 \address[id=aff2]{%
-  \orgname{Life Sciences Computation Centre, University of Melbourne},
-  %\street{D\"{u}sternbrooker Weg 20},
-  %\postcode{24105}
-  \city{Melbourne},
+  \orgname{Victorian Life Sciences Computation Initiative, University of Melbourne},
+  %\street{700 Swanston St},
+  %\postcode{3053}
+  \city{Carlton, VIC},
   \cny{Australia}
 }
 \address[id=aff3]{%
@@ -312,10 +312,10 @@ classical processing algorithms can be called from libraries -- hence
 limiting the programming task and the risk of bugs. Matlab (TM) and its
 image processing toolbox are popular in the academic community of
 computer vision and image processing. The Python language is widely used
-in the scientific world and in synchrotron facilitiies. As a
-general-purpose language, Python is used in synchrotrons for controlling
-device servers~\citep{pytango}, reconstructing tomography volumes from
-radiographies~\citep{Gursoy2014, Mirone2014}, and various data
+in the scientific world and in synchrotron facilities. As a
+general-purpose language, Python is used in synchrotrons to control
+device servers~\citep{pytango}, to reconstruct tomography volumes from
+radiographs~\citep{Gursoy2014, Mirone2014}, and in data
 processing packages for macromolecular cristallography~\citep{Adams2010},
 azimuthal integration of diffraction data~\citep{Ashiotis2015} or
 fluorescence analysis~\citep{pymca}.
@@ -325,14 +325,14 @@ processing library for the Python language, and a component of the ecosystem of
 Python scientific modules commonly known as Scientific
 Python~\citep{Oliphant2007}. Like the rest of the ecosystem,
 \texttt{scikit-image} is released under a permissive open-source license and is
-available free of charge. \texttt{scikit-image} is compatible with both 2-D and
+available free of charge. Most of \texttt{scikit-image} is compatible with both 2-D and
 3-D images, so that it can be used for a large number of imaging modalities,
 such as microscopy, radiography or tomography. In this article, we explain how
 \texttt{scikit-image} can be used for processing data acquired in synchrotron
 imaging experiments, with a strong focus on microtomography 3-D images. This
 article does not intend to be a pedagogical tutorial on \texttt{scikit-image}
 for X-ray imaging, but rather to explain the rationale behind the package, and
-what can be done with \texttt{scikit-image}. 
+provide various examples of its capabilities.
 
 
 \section*{Overview and first steps}
@@ -343,13 +343,13 @@ Python is a programming language, the user interacts with data objects and
 images through code, which is either typed and executed in an interactive
 interpreter, or written in text files (scripts) that are executed. 
 
-Image are manipulated as numerical arrays of uniform
+Images are manipulated as numerical arrays of uniform
 data type, a format that guarantees a fast access to the computer memory. The
 n-dimensional (2-D, 3-D, \dots) numerical array object is provided by the
 \texttt{NumPy} module~\citep{Vanderwalt2011}.
 
 In image processing, one of the first tasks is therefore to generate
-\texttt{NumPy} arrays, which is often done by reading data from files. Let us
+\texttt{NumPy} arrays, which is often done by reading data from files. We
 read one 2-D image from a file and display it with the following lines of code:
 
 \lstinputlisting[language=Python]{io.py} 
@@ -381,18 +381,19 @@ The benefits of \texttt{scikit-image} for image processing come not only
 from the features of the package alone, but also from the rich
 environment of Scientific Python~\citep{Oliphant2007, Perez2011}.
 Fig.~\ref{fig:ecosystem} illustrates how several components of this
-ecosystem are used for a typical image processing workflow. 
+ecosystem combine into a sophisticated image processing workflow.
 
 \paragraph{Interpreter and development environment.}
 
 While several interpreters are available to execute interactively Python
 instructions and scripts, the most popular one in the scientific world is
 the IPython interpreter~\citep{Perez2007, Rossant2015}. IPython is an
-advanced interpreter, which integrates for example a debugger,
-introspection and profiling methods, and online help. Several IDEs
-(Integrated Development Environment) integrate the IPython interpreter,
-together with other components such as a text editor. For example, Spyder 
-is a popular IDE (see Fig.~\ref{fig:spyder}).
+advanced interpreter, which integrates syntax highlighting, text auto-completion,
+a debugger,
+introspection and profiling methods, and online help. Several
+Integrated Development Environments (IDEs) include IPython,
+together with other components such as a text editor. Notable examples
+include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 
 \begin{figure*}
     \centerline{\includegraphics[width=0.99\textwidth]{spyder_process}}
@@ -401,11 +402,11 @@ is a popular IDE (see Fig.~\ref{fig:spyder}).
   should go here. \label{fig:spyder}}
 \end{figure*}
 
-The Jupyter notebook~\citep{Kluyver2016} is a web application which has
-grown from the IPython project, although the two projects have now
-diverged. Jupyter notebooks provide an interactive development
-environment within an Internet browser, where live code can be enriched
-by explanatory text, equations and visualizations (figure or not??). 
+The Jupyter notebook~\citep{Kluyver2016} is a web application that grew
+from the IPython project. Jupyter notebooks provide an interactive development
+environment within a web browser, where live code can be enriched
+by explanatory text, equations and visualizations (FIGURE).
+(jni: FURTHER TEXT ABOUT IMPACT OF JUPYTER NOTEBOOKS)
 
 \paragraph{NumPy arrays} are the cornerstone of the Scientific Python
 ecosystem, and of \texttt{scikit-image} operations in particular.
@@ -437,19 +438,16 @@ parameters of intermediate processing operations.
 library of the Python ecosystem. It can be used to visualize 2D data such
 as color or grayscale images, and 1D data such as contour lines, outlines
 of segmented regions, histograms of gray levels, etc. Although
-\texttt{matplotlib} has simple 3D plotting capabilities, it is
-recommended to use the \texttt{mayavi} module~\citep{Ramachandran2011}
+\texttt{matplotlib} has simple 3D plotting capabilities, we
+recommend using the \texttt{mayavi} module~\citep{Ramachandran2011}
 for applications requiring advanced 3D visualization, such as tomography. 
 \texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
 visualizing data passed as \texttt{numpy} arrays. For more advanced
 visualizations, a large majority of VTK capabilities can be accessed
-thanks to a pipeline API. A visualization pipeline can be designed either
-using the pipeline API, or graphically in the pipeline window.
+thanks to a pipeline API.
 \texttt{mayavi} offers a good trade-off between simplicity of use for
 common operations, and more advanced possibilities, including responsive
 visualizations.
-
-speak about skimage's visualizer as well?
 
 \paragraph{Advanced toolkits for signal processing and data science.}
 
@@ -471,8 +469,8 @@ implemented with a few lines of code.
 The modularity of the Scientific Python ecosystem may look
 confusing at first sight. Nevertheless, core modules of this ecosystem
 are almost perfectly compatible, thanks to the shared use of NumPy arrays
-and common development practices, although they are developed in parallel
-by different teams. 
+and common development practices (although they are developed in parallel
+by different teams).
 
 
 \section*{Image processing capabilities}
@@ -504,7 +502,7 @@ documentation. Functions of the API (define API here or above) are all
 documented using the same standard~\citep{Pawlik2015} as other major
 Scientific Python packages. The standard include a description of all
 input and output variables and their data type, together with
-explainations on what the function does and how to use it. Functions
+explanations on what the function does and how to use it. Function
 documentation is accessed either online, or within the development
 environment (IPython, Spyder, Jupyter Notebook...). 
 
@@ -519,7 +517,7 @@ examples (\url{http://scikit-image.org/docs/dev/auto_examples/}), a part of whic
 The principle of the gallery is to accelerate the learning curve of image
 processing, by showcasing graphical examples of image processing
 operations. Such examples are organized as an array of thumbnails with a
-short title (see Fig.~\ref{fig:gallery} left). Thumbnails are links to
+short title (see Fig.~\ref{fig:gallery} left). These thumbnails link to
 the webpage of the corresponding example, which features a mini-tutorial
 on the image processing method, the code needed to run the example and
 the figure generated by the example. Since the graphical gallery is an
