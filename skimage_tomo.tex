@@ -493,6 +493,18 @@ operations and more advanced algorithms. A sample of
 \texttt{scikit-image} capabilities is given in
 Fig.~\ref{fig:tomo_gallery}.  
 
+Tomographic images often suffer from artifacts or poor signal-to-noise
+ratio. Several denoising filters are available for image restoration,
+from general-purpose filters such as median and bilateral filters, to more
+specific filters. Total-variation denoising~\citep{Chambolle2004,
+Getreuer2012} is well-suited to restore
+piecewise-constant images, such as images with a small number of phases
+encountered in materials science~\citep{Bouttes2015}. Conversely, images
+with a fine-grained texture are better preserved with non-local means
+denoising~\citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
+
+
+
 \paragraph{Performance}
 
 \section*{Documentation and getting help}
