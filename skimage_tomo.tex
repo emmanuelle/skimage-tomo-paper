@@ -368,12 +368,18 @@ Raw data formats can be opened using the \texttt{NumPy} functions \texttt{fromfi
 
 \begin{figure*}
     \centerline{\includegraphics[width=0.8\textwidth]{ecosystem_landscape}}
-\caption{\csentence{Gallery of examples of \texttt{scikit-image}.}
- The gallery of examples consists of an array of thumbnails (left part),
- which link to example webpages, each centerered on a specific image
- processing task. Each webpage includes Python code generating a figure,
- the figure itself, as well as a short tutorial explaining the image
- processing operations and the code. \label{fig:ecosystem}}
+    \caption{\csentence{\texttt{scikit-image} and the Scientific Python
+	ecosystem}. Images are opened from files as \texttt{NumPy}
+	arrays. Functions of \texttt{scikit-image} transform image arrays
+	into other arrays with the same dimensions, or into arrays of
+	numbers corresponding to features of the image. The output of
+	scikit-image functions can be passed to other Python modules
+	relying on \texttt{NumPy} arrays, such as \texttt{Scipy} or
+	\texttt{scikit-learn}. Image-shaped arrays are transformed into
+	visualizations with \texttt{matplotlib} (2D) or \texttt{Mayavi}
+	(3D). A variety of environments is available for code development
+	and execution, from classical IDEs to Jupyter notebooks.
+    \label{fig:ecosystem}}
 \end{figure*}
 
 
@@ -400,9 +406,10 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 
 \begin{figure*}
     \centerline{\includegraphics[width=0.99\textwidth]{spyder_process}}
-\caption{\csentence{Sample figure title.}
-      A short description of the figure content
-  should go here. \label{fig:spyder}}
+    \caption{\csentence{The Spyder IDE} integrates a text editor (with
+	syntax highlighting), the IPython interpreter, as well as a panel
+	for code introspection (online help, variable explorer, \dots).
+ \label{fig:spyder}}
 \end{figure*}
 
 The Jupyter notebook~\citep{Kluyver2016} is a web application that grew
