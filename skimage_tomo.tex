@@ -49,7 +49,7 @@
 %%% Load packages
 \usepackage{amsthm,amsmath}
 %\RequirePackage{natbib}
-\RequirePackage{hyperref}
+\RequirePackage[breaklinks=true]{hyperref}
 \RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
 \usepackage[utf8]{inputenc} %unicode support
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
@@ -123,7 +123,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Analyzing tomographic images in Python with scikit-image}
+\title{Analyzing X-ray images in Python with scikit-image}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -218,11 +218,24 @@
 \begin{abstractbox}
 
 \begin{abstract} % abstract
-\parttitle{First part title} %if any
-Text for this section.
+    The exploration and processing of images is a vital aspect of the
+    scientific workflow of different X-ray imaging modalities. Users
+    require tools combining interactivity, versatility, and performance. 
 
-\parttitle{Second part title} %if any
-Text for this section.
+    \texttt{scikit-image} is an open-source image processing toolkit for
+    the Python language, that supports a large variety of file formats
+    and is compatible with 2-D and 3-D images. The toolkit exposes a
+    simple programming interface, corresponding to functions performing
+    operations on images, and different thematic modules that group these
+    functions according to their purpose, such as image restoration,
+    segmentation, measurements, etc. \texttt{scikit-image} users benefit
+    from the rich ecosystem of Python for science, with powerful
+    visualization libraries or machine learning toolkits.
+    \texttt{scikit-image} combines a gentle
+    learning curve, versatile image processing capabilities, and the
+    scalable performances required for the high-throughput analysis of
+    X-ray imaging data.
+
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,8 +296,8 @@ Text for this section.
 
 The acquisition time of synchrotron tomography images has decreased
 dramatically over the last decade, from hours to
-seconds~\citep{Maire2014}. New modalities such as single-bunch
-imaging~\citep{Rack2014} provide a time resolution down to the nanosecond
+seconds \citep{Maire2014}. New modalities such as single-bunch
+imaging \citep{Rack2014} provide a time resolution down to the nanosecond
 for radiography. However, the time subsequently spent in processing the
 images has not decreased as much, so that the outcome of a successful
 synchrotron imaging campaign often takes weeks or even months to be
@@ -293,7 +306,7 @@ transformed into scientific results.
 Transforming billions of pixels and voxels to a few meaningful figures
 represents a tremendous data reduction. Often, the sequence of operations
 needed to produce these data is not known beforehand, or might be altered
-due to artifacts~\citep{Marone2010}, or to an unforeseen evolution of
+due to artifacts \citep{Marone2010}, or to an unforeseen evolution of
 the sample. Image processing necessarily involves trial and error phases
 to choose the processing workflow. Therefore, image processing tools need
 to offer at the same time enough flexibility of use, a variety of
@@ -301,11 +314,11 @@ algorithms, and efficient implementations to allow for fast iterations
 while adjusting the workflow.
 
 Several software applications and libraries are available to synchrotron
-users to process their images. ImageJ~\citep{Abramoff2004, Schneider2012}
-and its distribution Fiji~\citep{Schindelin2012} is a popular tool for
+users to process their images. ImageJ \citep{Abramoff2004, Schneider2012}
+and its distribution Fiji \citep{Schindelin2012} is a popular tool for
 2-D and 3-D images, thanks to its intuitive menus and graphical tools,
 and the wealth of plugins contributed by a vivid
-community~\citep{Schindelin2015}. For 3-D images, commercial tools such
+community \citep{Schindelin2015}. For 3-D images, commercial tools such
 as Avizo 3D software (TM) are appreciated for an intuitive graphical
 pipeline and advanced 3D visualization. Alternatively, the use of a
 programming language gives finer control and more possibilities, provided
@@ -315,27 +328,26 @@ image processing toolbox are popular in the academic community of
 computer vision and image processing. The Python language is widely used
 in the scientific world and in synchrotron facilities. As a
 general-purpose language, Python is used in synchrotrons to control
-device servers~\citep{pytango}, to access raw data of X-ray
-detectors~\citep{Knudsen2013}, to reconstruct tomography volumes from
-radiographs~\citep{Gursoy2014, Mirone2014}, and in data
-processing packages for macromolecular cristallography~\citep{Adams2010},
-azimuthal integration of diffraction data~\citep{Ashiotis2015} or
-fluorescence analysis~\citep{pymca}.
+device servers \citep{pytango}, to access raw data of X-ray
+detectors \citep{Knudsen2013}, to reconstruct tomography volumes from
+radiographs \citep{Gursoy2014, Mirone2014}, and in data
+processing packages for macromolecular cristallography \citep{Adams2010},
+azimuthal integration of diffraction data \citep{Ashiotis2015} or
+fluorescence analysis \citep{pymca}.
 
-\texttt{scikit-image}~\citep{Vanderwalt2014} is a general-purpose image
+\texttt{scikit-image} \citep{Vanderwalt2014} is a general-purpose image
 processing library for the Python language, and a component of the ecosystem of
 Python scientific modules commonly known as Scientific
-Python~\citep{Oliphant2007}. Like the rest of the ecosystem,
+Python \citep{Oliphant2007}. Like the rest of the ecosystem,
 \texttt{scikit-image} is released under a permissive open-source license and is
 available free of charge. Most of \texttt{scikit-image} is compatible with both 2-D and
 3-D images, so that it can be used for a large number of imaging modalities,
 such as microscopy, radiography or tomography. In this article, we explain how
-\texttt{scikit-image} can be used for processing data acquired in synchrotron
-imaging experiments, with a strong focus on microtomography 3-D images. This
+\texttt{scikit-image} can be used for processing data acquired in X-ray
+imaging experiments, with a focus on microtomography 3-D images. This
 article does not intend to be a pedagogical tutorial on \texttt{scikit-image}
 for X-ray imaging, but rather to explain the rationale behind the package, and
 provide various examples of its capabilities.
-
 
 \section*{Overview and first steps}
 
@@ -365,7 +377,7 @@ interpreter, or written in text files (scripts) that are executed.
 Images are manipulated as numerical arrays of uniform
 data type, a format that guarantees a fast access to the computer memory. The
 n-dimensional (2-D, 3-D, \dots) numerical array object is provided by the
-\texttt{NumPy} module~\citep{Vanderwalt2011}.
+\texttt{NumPy} module \citep{Vanderwalt2011}.
 
 In image processing, one of the first tasks is therefore to generate
 \texttt{NumPy} arrays, which is often done by reading data from files. We
@@ -375,14 +387,15 @@ read one 2-D image from a file and display it with the following lines of code:
 
 \texttt{skimage} is the name under which \texttt{scikit-image} is imported in
 Python code. Note that functions (such as \texttt{imread} to read an image
-file, or \texttt{imshow} to display an image) are found in submodules of
-\texttt{skimage}, such as \texttt{io}. 
+file, or \texttt{imshow} to display an image) are found in thematic submodules of
+\texttt{skimage}, such as \texttt{io} for Input/Output. 
 
 A stack of 2-D images, such as tomography slices generated by a reconstruction algorithm, can be opened as an image collection or a 3-D array:
 \lstinputlisting[language=Python]{io_coll.py}
 Raw data formats can be opened using the \texttt{NumPy} functions \texttt{fromfile} or \texttt{memmap}, and \texttt{hdf5} files are opened using modules such as \texttt{h5py} or \texttt{pytables}.
 
-\texttt{scikit-image} has a very simple API, based almost only on
+\texttt{scikit-image} has a very simple Application Programming Interface
+(API), based almost only on
 functions. Most functions take an image (\emph{i.e} a multi-dimensional
 array) as input parameter:
 \begin{lstlisting}
@@ -403,8 +416,7 @@ segmented, and an image of markers from which labels are propagated:
 >>> labels = morphology.watershed(im, markers)
 \end{lstlisting}
 Therefore, the image processing workflow can be considered as a directed graph
-(\textcolor{blue}{or is it a tree?})
-(rather than a linear pipeline), where nodes are image-shaped arrays, and
+(a richer structure than a linear pipeline), where nodes are image-shaped arrays, and
 edges are functions of \texttt{scikit-image} transforming the arrays (see
 Fig.~\ref{fig:ecosystem}).
 
@@ -418,11 +430,22 @@ when passed a 3-D argument:
 ValueError: The parameter `image` must be a 2-dimensional array
 \end{lstlisting}
 
+Another type of functions returns numerical value(s) that do not
+correspond to image objects, such as pixel coordinates of objects of
+interest or statistical
+information about the image:
+\begin{lstlisting}
+>>> from skimage import exposure
+>>> counts, bins = exposure.histogram(im)
+>>> counts.shape
+(256,)
+\end{lstlisting}
+
 \section*{The Python ecosystem}
 
 The benefits of \texttt{scikit-image} for image processing come not only
 from the features of the package alone, but also from the rich
-environment of Scientific Python~\citep{Oliphant2007, Perez2011}.
+environment of Scientific Python \citep{Oliphant2007, Perez2011}.
 Fig.~\ref{fig:ecosystem} illustrates how several components of this
 ecosystem combine into a sophisticated image processing workflow.
 
@@ -430,7 +453,7 @@ ecosystem combine into a sophisticated image processing workflow.
 
 While several interpreters are available to execute interactively Python
 instructions and scripts, the most popular one in the scientific world is
-the IPython interpreter~\citep{Perez2007, Rossant2015}. IPython is an
+the IPython interpreter \citep{Perez2007, Rossant2015}. IPython is an
 advanced interpreter, which integrates syntax highlighting, text auto-completion,
 a debugger,
 introspection and profiling methods, and online help. Several
@@ -446,7 +469,7 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
  \label{fig:spyder}}
 \end{figure*}
 
-The Jupyter notebook~\citep{Kluyver2016} is a web application that grew
+The Jupyter notebook \citep{Kluyver2016} is a web application that grew
 from the IPython project. Jupyter notebooks provide an interactive development
 environment within a web browser, where live code can be enriched
 by explanatory text, equations and visualizations (FIGURE).
@@ -478,12 +501,12 @@ sub_volume = im[100:-100, 100:-100, 100:-100]
 Visualizing images is an important component of the image processing
 workflow, in order to verify the final result and to adjust the
 parameters of intermediate processing operations.
-\texttt{matplotlib}~\citep{Hunter2007} is the most popular 2D plotting
+\texttt{matplotlib} \citep{Hunter2007} is the most popular 2D plotting
 library of the Python ecosystem. It can be used to visualize 2D data such
 as color or grayscale images, and 1D data such as contour lines, outlines
 of segmented regions, histograms of gray levels, etc. Although
 \texttt{matplotlib} has simple 3D plotting capabilities, we
-recommend using the \texttt{mayavi} module~\citep{Ramachandran2011}
+recommend using the \texttt{mayavi} module \citep{Ramachandran2011}
 for applications requiring advanced 3D visualization, such as tomography. 
 \texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
 visualizing data passed as \texttt{numpy} arrays. For more advanced
@@ -497,7 +520,7 @@ visualizations.
 
 \texttt{scikit-image} is only one Python module that can be used for data
 processing, among many others. A very popular module is
-\texttt{scikit-learn}~\citep{Pedregosa2011}, a Python module for machine
+\texttt{scikit-learn} \citep{Pedregosa2011}, a Python module for machine
 learning using \texttt{NumPy} arrays. If local features of an image
 (such as local statistics of gray levels, or geometric points of
 interest), or features of segmented objects (e.g. geometrical and
@@ -527,16 +550,16 @@ by different teams).
 	\textbf{Filtering -} Top: non-local means denoising of an image
 	with a fine-grained texture, acquired by \emph{in situ}
 	synchrotron microtomography during
-	glass melting~\citep{Gouillart2012}. Bottom: total-variation
+	glass melting \citep{Gouillart2012}. Bottom: total-variation
 	denoising of an image with two phases, corresponding to
 	phase-separating silicate melts observed by \emph{in situ
-	tomography}~\citep{Bouttes2015}.
+	tomography} \citep{Bouttes2015}.
 	\textbf{Feature extraction -} Top: Hubble deep field (NASA,
 	public domain), blob detection using the
 	Laplacian of Gaussian method. Bottom: ??
 	\textbf{Segmentation - } Top: super-pixel segmentation
-	of a CT slice of the human head~\citep{tomo_wikipedia}, using
-	Felzenszwalb's algorithm~\citep{Felzenszwalb2004}. Bottom: random
+	of a CT slice of the human head \citep{tomo_wikipedia}, using
+	Felzenszwalb's algorithm \citep{Felzenszwalb2004}. Bottom: random
 	walker segmentation (right) of noisy image (top-left corner), using
 	histogram-determined markers (bottom-left corner).
 	\textbf{Measures -} Top: visualization of local diameter
@@ -558,16 +581,16 @@ Fig.~\ref{fig:tomo_gallery}.
 Tomographic images often suffer from artifacts or poor signal-to-noise
 ratio. Several denoising filters are available for image restoration,
 from general-purpose filters such as median and bilateral filters, to more
-specific filters. Total-variation denoising~\citep{Chambolle2004,
+specific filters. Total-variation denoising \citep{Chambolle2004,
 Getreuer2012} is well-suited to restore
 piecewise-constant images, such as images with a small number of phases
-encountered in materials science~\citep{Bouttes2015}. Conversely, images
+encountered in materials science \citep{Bouttes2015}. Conversely, images
 with a fine-grained texture are better preserved with non-local means
-denoising~\citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
+denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
 
 \emma{Insert paragraph on features detection here? Juan?} Diffraction
 peaks in 2D diffraction images can be extracted using blob detection
-methods~\citep{Ashiotis2015}, such as the Laplacian of Gaussian method
+methods \citep{Ashiotis2015}, such as the Laplacian of Gaussian method
 (see Fig.~\ref{fig:tomo_gallery}).
 
 Segmentation of regions of interest can be achieved using different
@@ -575,14 +598,14 @@ strategies, depending on the characteristics of the image. Images with a
 clear contrast between regions can be segmented automatically thanks to
 several thresholding algorithms, including an adaptive local thresholding
 algorithm aimed at images with contrast variations. Super-pixel
-algorithms~\citep{Felzenszwalb2004, Achanta2012} (see
+algorithms \citep{Felzenszwalb2004, Achanta2012} (see
 Fig.~\ref{fig:tomo_gallery}) create an over-segmentation of images in
 super-pixels, by grouping pixels that are close together both in color-
 and direct space. Region-growing algorithms, such as the morphological
-watershed or the random walker~\citep{Grady2006}, propagate the labels
+watershed or the random walker \citep{Grady2006}, propagate the labels
 of user-defined markers through the image (see
 Fig.~\ref{fig:tomo_gallery}). The active contour
-algorithm~\citep{Kass1988} fits snake contours to features of the
+algorithm \citep{Kass1988} fits snake contours to features of the
 image, such as edges or high-brightness regions.
 
 The characteristics of labeled regions (particles, porosities, organs,
@@ -605,7 +628,7 @@ processing operations is a critical issue. \texttt{scikit-image} relies mostly
 on calls to \texttt{NumPy} operations, with most of them that are performed in
 optimized compiled code (C or Fortran). Performance-critical parts of the code
 that cannot call efficient \texttt{NumPy} code are implemented in
-\texttt{Cython}. \texttt{Cython}~\citep{Behnel2011} is an extension of the
+\texttt{Cython}. \texttt{Cython} \citep{Behnel2011} is an extension of the
 Python language that supports explicit type declarations, and is compiled
 directly to C. 
 
@@ -645,10 +668,10 @@ __________________________median - 0.0s, 0.0min
 
 Finally, let us note that the biggest performance improvements often come from
 the improvement of algorithms (as opposed to computing architectures only). For
-example, non-local means denoising~\citep{Buades2005} is a costly operation,
+example, non-local means denoising \citep{Buades2005} is a costly operation,
 since it requires several nested loops, on all pixels and on neighboring
 patches to be compared with the pixel-centered patch. Thanks to the
-implementation of a more recent algorithm~\citep{Darbon2008} that modifies the
+implementation of a more recent algorithm \citep{Darbon2008} that modifies the
 internal organization of loops, it was possible to gain a factor of 5 to 10.
 The large size of the \texttt{scikit-image} community ensures that possible
 algorithmic improvements are discussed regularly.
@@ -659,7 +682,7 @@ The success of a software package aimed at end-users is strongly
 correlated to the quality of its documentation (find citation).
 \texttt{scikit-image} users have access to different kinds of
 documentation. Functions of the API (define API here or above) are all
-documented using the same standard~\citep{Pawlik2015} as other major
+documented using the same standard \citep{Pawlik2015} as other major
 Scientific Python packages. The standard include a description of all
 input and output variables and their data type, together with
 explanations on what the function does and how to use it. Function
@@ -691,7 +714,7 @@ particular...
 
 Finally, tutorials on \texttt{scikit-image} are available in various
 places, either as YouTube videos, or in the SciPy Lecture
-Notes~\citep{scipylecturenotes}, a comprehensive online book of Scientific
+Notes \citep{scipylecturenotes}, a comprehensive online book of Scientific
 Python tutorials.  
 
 \section*{Development and use of scikit-image}
