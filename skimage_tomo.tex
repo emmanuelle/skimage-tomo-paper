@@ -525,7 +525,7 @@ learning using \texttt{NumPy} arrays. If local features of an image
 (such as local statistics of gray levels, or geometric points of
 interest), or features of segmented objects (e.g. geometrical and
 intensity characteristics of segmented particles) are extracted with
-functions from \texttt{skimage.feature} (see Fig.~\ref{fig:ecosystem}, it
+functions from \texttt{skimage.feature} (see Fig.~\ref{fig:ecosystem}), it
 is then possible to use a \emph{classification} algorithm of
 \texttt{scikit-learn}, either for labeling pixels (a segmentation task)
 or to classify whole images or objects that have already been segmented.
@@ -533,11 +533,13 @@ The interoperability between these packages is ensured by the common use
 of \texttt{NumPy} arrays, so that the tasks described above are
 implemented with a few lines of code.
 
-The modularity of the Scientific Python ecosystem may look
+The modularity of the Scientific Python ecosystem may be
 confusing at first sight. Nevertheless, core modules of this ecosystem
 are almost perfectly compatible, thanks to the shared use of NumPy arrays
 and common development practices (although they are developed in parallel
-by different teams).
+by different teams). Several integrated distributions, such as Anaconda
+or Canopy, bundle together the most common packages, including
+\texttt{scikit-image}.
 
 
 \section*{Image processing capabilities}
@@ -580,13 +582,13 @@ Fig.~\ref{fig:tomo_gallery}.
 
 Tomographic images often suffer from artifacts or poor signal-to-noise
 ratio. Several denoising filters are available for image restoration,
-from general-purpose filters such as median and bilateral filters, to more
-specific filters. Total-variation denoising \citep{Chambolle2004,
-Getreuer2012} is well-suited to restore
-piecewise-constant images, such as images with a small number of phases
-encountered in materials science \citep{Bouttes2015}. Conversely, images
-with a fine-grained texture are better preserved with non-local means
-denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
+from general-purpose filters such as median and bilateral filters, to
+more specific filters. Total-variation denoising \citep{Chambolle2004,
+Getreuer2012} is well-suited to restore piecewise-constant images (see
+Fig.~\ref{fig:tomo_gallery}), such as images with a small number of
+phases encountered in materials science \citep{Bouttes2015}. Conversely,
+images with a fine-grained texture are better preserved with non-local
+means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
 
 \emma{Insert paragraph on features detection here? Juan?} Diffraction
 peaks in 2D diffraction images can be extracted using blob detection
@@ -640,10 +642,31 @@ workflow to different images, on different cores. However, finer-grained
 parallelization is preferable when prototyping the processing workflow.
 
 
+An easy solution consists in dividing an image into smaller images (with
+or without overlap, depending on the operation), and to apply the
+same operation on the different sub-images, on different cores. Creating overlapping chunks is easy with the dedicated function \texttt{view\_as\_windows} (or \texttt{view\_as\_blocks} for contiguous non-overlapping chunks):
+\begin{lstlisting}[language=Python]
+>>> from skimage import util, data
+>>> im = data.camera()
+>>> im.shape
+(512, 512)
+>>> # chunks of size 120 with 8-pixel overlap
+>>> chunks = util.view_as_windows(im, (128, 128), step=120)
+>>> chunks.shape
+(4, 4, 128, 128)
+\end{lstlisting}
+The \texttt{joblib} module enables easy parallel processing. Looping over the different blocks, and dispatching the computation over several cores, is realized with the following syntax:  
+\begin{lstlisting}
+>>> from joblib import Parallel, delayed
+>>> filtered_chunks = Parallel(n_jobs=4)(delayed(filters.gaussian)(chunks[i, j]) for i in range(4) for j in range(4))
+\end{lstlisting}
+\texttt{scikit-image} also offers experimental support for a more integrated parallel processing pipeline, thanks to the \texttt{dask} \citep{dask} module:
+\begin{lstlisting}
+filtered_im = util.apply_parallel(filters.gaussian, im, depth=8)
+\end{lstlisting}
+The size of chunks is determined automatically from the number of available cpus, or can be specified by the user.
 
-\emma{Juan or Stéfan, can you add something about dask?}
-
-Prototyping the image processing workflow requires several trial and error
+On a different note, prototyping the image processing workflow requires several trial and error
 executions of scripts containing different operations. The \texttt{joblib}
 module provides a caching mechanism that avoids the repetition of function
 calls, if their arguments have not changed:
@@ -678,10 +701,10 @@ algorithmic improvements are discussed regularly.
 
 \section*{Documentation and getting help}
 
-The success of a software package aimed at end-users is strongly
-correlated to the quality of its documentation (find citation).
+The quality of software documentation is an important component to the
+success of a package aimed at scientists.
 \texttt{scikit-image} users have access to different kinds of
-documentation. Functions of the API (define API here or above) are all
+documentation. Functions of the API are all
 documented using the same standard \citep{Pawlik2015} as other major
 Scientific Python packages. The standard include a description of all
 input and output variables and their data type, together with
@@ -696,7 +719,7 @@ environment (IPython, Spyder, Jupyter Notebook...).
 \end{figure*}
 
 In addition, a popular documentation tool is the graphical gallery of
-examples (\url{http://scikit-image.org/docs/dev/auto_examples/}), a part of which is displayed in Fig.~\ref{fig:gallery}.
+examples (\nolinkurl{http://scikit-image.org/docs/dev/auto_examples/}), a part of which is displayed in Fig.~\ref{fig:gallery}.
 The principle of the gallery is to accelerate the learning curve of image
 processing, by showcasing graphical examples of image processing
 operations. Such examples are organized as an array of thumbnails with a
@@ -707,10 +730,11 @@ the figure generated by the example. Since the graphical gallery is an
 efficient way to inform users about the features of
 \texttt{scikit-image}, every new feature integrated in the package must
 include an example for the gallery.
-
 Longer tutorials and a more narrative documentation is available as well
-in the User Guide of \texttt{scikit-image}. The User Guide explains in
-particular...
+in the online User Guide of \texttt{scikit-image}. The User Guide explains in
+particular "big picture" aspects of \texttt{scikit-image}, such as its
+use of \texttt{NumPy} arrays as images, or how the package interacts with
+other parts of the scientific Python ecosystem.
 
 Finally, tutorials on \texttt{scikit-image} are available in various
 places, either as YouTube videos, or in the SciPy Lecture
@@ -724,13 +748,14 @@ Python tutorials.
 Estimating the number of active users of an open-source package is a
 difficult task. Statistics of downloads, for example, largely
 overestimate the number of active users, all the more if the package is
-bundled with others in a software distribution, like Anaconda or Canopy.
-A view closer to reality can be obtained by analyzing the statistics of
-visits of the online help, available on the project website.  As of the
-first half of 2016, 20000 unique visitors per month visit the website of
-scikit-image \url{http://scikit-image.org/}. These users come from 80
-countries, located almost equally in Europe, America and Asia (Oceania
-and Africa representing a much smaller fraction of visitors).
+bundled with others in a software distribution, like Anaconda or
+Canopy. A view closer to reality can be obtained by analyzing the
+statistics of visits of the online help, available on the project
+website.  As of the first half of 2016, 20000 unique visitors visit the
+website of scikit-image every month \url{http://scikit-image.org/}. These
+users come from 80 countries, located almost equally in Europe, America
+and Asia (Oceania and Africa representing a much smaller fraction of
+visitors).
 
 \paragraph{Development process.}
 
@@ -745,6 +770,7 @@ for improvements.
 A release cycle of one or two releases every year
 ensures that new features are proposed to users on a regular basis.
 
+\section*{Challenges and roadmap}
 
 \section*{Conclusion}
 
