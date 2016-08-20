@@ -499,7 +499,7 @@ sub_volume = im[100:-100, 100:-100, 100:-100]
 \paragraph{Visualization libraries.}
 
 Visualizing images is an important component of the image processing
-workflow, in order to verify the final result and to adjust the
+workflow, used to inspect the final result and to adjust the
 parameters of intermediate processing operations.
 \texttt{matplotlib} \citep{Hunter2007} is the most popular 2D plotting
 library of the Python ecosystem. It can be used to visualize 2D data such
@@ -511,9 +511,10 @@ for applications requiring advanced 3D visualization, such as tomography.
 \texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
 visualizing data passed as \texttt{numpy} arrays. For more advanced
 visualizations, a large majority of VTK capabilities can be accessed
-thanks to a pipeline API.
+through mayavi's pipeline API.
 \texttt{mayavi} offers a good trade-off between simplicity of use for
-common operations, and more advanced possibilities, including responsive
+common operations, and accessibility to more sophisticated
+capabilities such as responsive
 visualizations.
 
 \paragraph{Advanced toolkits for signal processing and data science.}
@@ -521,13 +522,13 @@ visualizations.
 \texttt{scikit-image} is only one Python module that can be used for data
 processing, among many others. A very popular module is
 \texttt{scikit-learn} \citep{Pedregosa2011}, a Python module for machine
-learning using \texttt{NumPy} arrays. If local features of an image
+learning using \texttt{NumPy} arrays. Local features of an image
 (such as local statistics of gray levels, or geometric points of
-interest), or features of segmented objects (e.g. geometrical and
-intensity characteristics of segmented particles) are extracted with
-functions from \texttt{skimage.feature} (see Fig.~\ref{fig:ecosystem}), it
-is then possible to use a \emph{classification} algorithm of
-\texttt{scikit-learn}, either for labeling pixels (a segmentation task)
+interest) or features of segmented objects (e.g. geometrical and
+intensity characteristics of segmented particles) can be extracted with
+functions from \texttt{skimage.feature} (see Fig.~\ref{fig:ecosystem}). It
+is then possible to use a \emph{classification} algorithm from
+\texttt{scikit-learn} to label pixels (a segmentation task)
 or to classify whole images or objects that have already been segmented.
 The interoperability between these packages is ensured by the common use
 of \texttt{NumPy} arrays, so that the tasks described above are
