@@ -445,15 +445,15 @@ information about the image:
 
 The benefits of \texttt{scikit-image} for image processing come not only
 from the features of the package alone, but also from the rich
-environment of Scientific Python \citep{Oliphant2007, Perez2011}.
+environment surrounding scientific Python \citep{Oliphant2007, Perez2011}.
 Fig.~\ref{fig:ecosystem} illustrates how several components of this
 ecosystem combine into a sophisticated image processing workflow.
 
 \paragraph{Interpreter and development environment.}
 
-While several interpreters are available to execute interactively Python
-instructions and scripts, the most popular one in the scientific world is
-the IPython interpreter \citep{Perez2007, Rossant2015}. IPython is an
+While several interpreters are available to execute Python
+instructions and scripts interactively, the most popular in the scientific world is
+IPython \citep{Perez2007, Rossant2015}. IPython is an
 advanced interpreter, which integrates syntax highlighting, text auto-completion,
 a debugger,
 introspection and profiling methods, and online help. Several
@@ -470,7 +470,7 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 \end{figure*}
 
 The Jupyter notebook \citep{Kluyver2016} is a web application that grew
-from the IPython project. Jupyter notebooks provide an interactive development
+out of the IPython project. Jupyter notebooks provide an interactive development
 environment within a web browser, where live code can be enriched
 by explanatory text, equations and visualizations (FIGURE).
 (jni: FURTHER TEXT ABOUT IMPACT OF JUPYTER NOTEBOOKS)
@@ -478,21 +478,22 @@ by explanatory text, equations and visualizations (FIGURE).
 \paragraph{NumPy arrays} are the cornerstone of the Scientific Python
 ecosystem, and of \texttt{scikit-image} operations in particular.
 Cropping or downsampling an image, or retrieving pixels corresponding to
-a given label in a segmentation are all one-liners NumPy code. To
-illustrate the compactness of NumPy code, modifying pixels values below a
-threshold can be written as
+a given label in a segmentation are all NumPy ``one-liners''. To
+illustrate the compactness of NumPy code, consider modifying pixel values below a
+threshold.  This operation can be written as
 \begin{lstlisting}
 im[im < 0.5] = 0
 \end{lstlisting}
-using the possibility to index arrays with boolean arrays, called
+exploiting the possibility of indexing arrays with boolean arrays, also called
 \emph{masking}. Also, \texttt{NumPy} uses memory sparingly and avoids
 making new copies of arrays whenever possible, which is a important
 requirement when dealing with the gigabyte-sized images of tomography.
 For example, cropping a subvolume as follows does not create a copy of the
-original array:
+original array
 \begin{lstlisting}
 sub_volume = im[100:-100, 100:-100, 100:-100]
 \end{lstlisting}
+but instead refers to the correct memory offsets in the original.
 
 
 
