@@ -558,7 +558,8 @@ or Canopy, bundle together the most common packages, including
 	tomography} \citep{Bouttes2015}.
 	\textbf{Feature extraction -} Top: Hubble deep field (NASA,
 	public domain), blob detection using the
-	Laplacian of Gaussian method. Bottom: ??
+	Laplacian of Gaussian method. Bottom: ridge detection using the
+	leading value of the Hessian matrix. 
 	\textbf{Segmentation - } Top: super-pixel segmentation
 	of a CT slice of the human head \citep{tomo_wikipedia}, using
 	Felzenszwalb's algorithm \citep{Felzenszwalb2004}. Bottom: random
@@ -590,10 +591,13 @@ phases encountered in materials science \citep{Bouttes2015}. Conversely,
 images with a fine-grained texture are better preserved with non-local
 means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
 
-\emma{Insert paragraph on features detection here? Juan?} Diffraction
-peaks in 2D diffraction images can be extracted using blob detection
-methods \citep{Ashiotis2015}, such as the Laplacian of Gaussian method
-(see Fig.~\ref{fig:tomo_gallery}).
+\texttt{scikit-image} offers a wide variety of functions to detect
+geometrical features of interest in an image. Diffraction peaks in 2D
+diffraction images can be extracted using blob detection methods
+\citep{Ashiotis2015}, such as the Laplacian of Gaussian method (see
+Fig.~\ref{fig:tomo_gallery}). In order to detect thin boundaries, the
+ridges of an image can be accessed as regions of high leading eigenvalue
+of the local Hessian matrix (see Fig.~\ref{fig:tomo_gallery}).
 
 Segmentation of regions of interest can be achieved using different
 strategies, depending on the characteristics of the image. Images with a
