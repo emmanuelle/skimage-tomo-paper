@@ -572,42 +572,40 @@ or Canopy, bundle together the most common packages, including
 \label{fig:tomo_gallery}}
 \end{figure*}
 
-\texttt{scikit-image} offers all the classical operations of image
-processing, such as exposure and color adjustment, filtering,
-segmentation, features extraction, geometric transformations or
-measurements of region characteristics. For these
-different categories, the package includes both standard generic
-operations and more advanced algorithms. A sample of
-\texttt{scikit-image} capabilities is given in
+\texttt{scikit-image} offers most classical image processing operations,
+such as exposure and color adjustment, filtering,
+segmentation, feature extraction, geometric transformations, and
+measurements of region characteristics. In addition, some advanced
+algorithms are also implemented, a selection of which is illustrated in
 Fig.~\ref{fig:tomo_gallery}.  
 
 Tomographic images often suffer from artifacts or poor signal-to-noise
-ratio. Several denoising filters are available for image restoration,
-from general-purpose filters such as median and bilateral filters, to
-more specific filters. Total-variation denoising \citep{Chambolle2004,
-Getreuer2012} is well-suited to restore piecewise-constant images (see
+ratio. Several denoising filters are available for restoring these
+images, ranging from general-purpose median and bilateral
+filters to those more suited to specific applications. For example, total-variation denoising \citep{Chambolle2004,
+Getreuer2012} is ideal for restoring piecewise-constant images (see
 Fig.~\ref{fig:tomo_gallery}), such as images with a small number of
 phases encountered in materials science \citep{Bouttes2015}. Conversely,
 images with a fine-grained texture are better preserved with non-local
 means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
 
-\texttt{scikit-image} offers a wide variety of functions to detect
-geometrical features of interest in an image. Diffraction peaks in 2D
+\texttt{scikit-image} offers a wide variety of functions for detecting
+geometrical features of interest in an image. Peaks in 2D
 diffraction images can be extracted using blob detection methods
 \citep{Ashiotis2015}, such as the Laplacian of Gaussian method (see
 Fig.~\ref{fig:tomo_gallery}). In order to detect thin boundaries, the
-ridges of an image can be accessed as regions of high leading eigenvalue
-of the local Hessian matrix (see Fig.~\ref{fig:tomo_gallery}).
+ridges of an image can be identified as regions for which the leading eigenvalue
+of the local Hessian matrix is high (see Fig.~\ref{fig:tomo_gallery}).
 
-Segmentation of regions of interest can be achieved using different
+Segmentation of regions of interest can be achieved using one of various
 strategies, depending on the characteristics of the image. Images with a
 clear contrast between regions can be segmented automatically thanks to
 several thresholding algorithms, including an adaptive local thresholding
-algorithm aimed at images with contrast variations. Super-pixel
+algorithm aimed at images with strong contrast variations. Super-pixel
 algorithms \citep{Felzenszwalb2004, Achanta2012} (see
 Fig.~\ref{fig:tomo_gallery}) create an over-segmentation of images in
-super-pixels, by grouping pixels that are close together both in color-
-and direct space. Region-growing algorithms, such as the morphological
+super-pixels, by grouping pixels that are close together both in color
+and spatial distance. Region-growing algorithms, such as the morphological
 watershed or the random walker \citep{Grady2006}, propagate the labels
 of user-defined markers through the image (see
 Fig.~\ref{fig:tomo_gallery}). The active contour
