@@ -298,7 +298,7 @@ seconds \citep{Maire2014}. New modalities such as single-bunch
 imaging \citep{Rack2014} provide a time resolution down to the nanosecond
 for radiography. However, the time subsequently spent in processing the
 images has not decreased as much, so that the outcome of a successful
-synchrotron imaging campaign often takes weeks or even months to be
+synchrotron imaging run often takes weeks or even months to be
 transformed into scientific results. 
 
 Transforming billions of pixels and voxels to a few meaningful figures
@@ -449,6 +449,26 @@ environment surrounding scientific Python \citep{Oliphant2007, Perez2011}.
 Fig.~\ref{fig:ecosystem} illustrates how several components of this
 ecosystem combine into a sophisticated image processing workflow.
 
+\paragraph{NumPy arrays} are the cornerstone of the Scientific Python
+ecosystem, and of \texttt{scikit-image} operations in particular.
+Cropping or downsampling an image, or retrieving pixels corresponding to
+a given label in a segmentation are all NumPy ``one-liners''. To
+illustrate the compactness of NumPy code, consider modifying pixel values below a
+threshold.  This operation can be written as
+\begin{lstlisting}
+im[im < 0.5] = 0
+\end{lstlisting}
+exploiting the ability to index arrays with boolean arrays, also called
+\emph{masking}. \texttt{NumPy} uses memory sparingly and avoids
+making new copies of arrays whenever possible, an important
+requirement when dealing with the gigabyte-sized images of tomography.
+For example, cropping a subvolume as follows does not create a copy of the
+original array
+\begin{lstlisting}
+sub_volume = im[100:-100, 100:-100, 100:-100]
+\end{lstlisting}
+but instead refers to the correct memory offsets in the original.
+
 \paragraph{Interpreter and development environment.}
 
 While several interpreters are available to execute Python instructions
@@ -475,26 +495,6 @@ by explanatory text, equations and visualizations (FIGURE).
 As of July 2016, more than 500,000 Jupyter notebooks were posted on GitHub,
 demonstrating their wide adoption by the community as workflow-sharing
 tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
-
-\paragraph{NumPy arrays} are the cornerstone of the Scientific Python
-ecosystem, and of \texttt{scikit-image} operations in particular.
-Cropping or downsampling an image, or retrieving pixels corresponding to
-a given label in a segmentation are all NumPy ``one-liners''. To
-illustrate the compactness of NumPy code, consider modifying pixel values below a
-threshold.  This operation can be written as
-\begin{lstlisting}
-im[im < 0.5] = 0
-\end{lstlisting}
-exploiting the ability to index arrays with boolean arrays, also called
-\emph{masking}. \texttt{NumPy} uses memory sparingly and avoids
-making new copies of arrays whenever possible, an important
-requirement when dealing with the gigabyte-sized images of tomography.
-For example, cropping a subvolume as follows does not create a copy of the
-original array
-\begin{lstlisting}
-sub_volume = im[100:-100, 100:-100, 100:-100]
-\end{lstlisting}
-but instead refers to the correct memory offsets in the original.
 
 
 \paragraph{Visualization libraries.}
@@ -669,7 +669,7 @@ filtered_im = util.apply_parallel(filters.gaussian, im, depth=8)
 \end{lstlisting}
 The size of chunks is determined automatically from the number of available cpus, or can be specified by the user.
 
-\em{Caching} provides another tool to speed up data analysis. A situation
+{\em Caching} provides another tool to speed up data analysis. A situation
 that often arises is that, while prototyping a workflow, scripts
 (containing the image processing pipeline) are run several times to
 experiment with parameters. \texttt{joblib} provides a caching mechanism
