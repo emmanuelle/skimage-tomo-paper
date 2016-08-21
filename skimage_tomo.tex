@@ -356,7 +356,7 @@ images through code, which is either entered and executed in an interactive
 interpreter, or written in text files (so-called scripts) that are executed. 
 
 \begin{figure*}
-    \centerline{\includegraphics[width=0.8\textwidth]{ecosystem_landscape}}
+    \centerline{\includegraphics[width=0.77\textwidth]{ecosystem_landscape}}
     \caption{\csentence{\texttt{scikit-image} and the Scientific Python
 	ecosystem}. Images are opened from files as \texttt{NumPy}
 	arrays. Functions of \texttt{scikit-image} transform image arrays
@@ -402,7 +402,7 @@ For every raw data specification, it is thus very easy to write a reader
 using \texttt{np.memmap} (see for example
 \url{https://github.com/jni/python-redshirt}). 
 \texttt{hdf5} files are accessed using modules such as \texttt{h5py}, \texttt{pytables}.
-\texttt{hdf5} files are accessed using modules such as \texttt{h5py}, \texttt{pytables}.
+%\texttt{hdf5} files are accessed using modules such as \texttt{h5py}, \texttt{pytables}.
 
 \texttt{scikit-image} has a simple Application Programming Interface
 (API), based almost exclusively on
@@ -491,7 +491,7 @@ Integrated Development Environments (IDEs) come bundled with IPython,
 together with other components such as a text editor. Notable examples
 include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 
-\begin{figure*}
+\begin{figure*}[ht!]
     \centerline{\includegraphics[width=0.99\textwidth]{spyder_process}}
     \caption{\csentence{The Spyder IDE} integrates a text editor (with
 	syntax highlighting), the IPython interpreter, as well as a panel
@@ -500,7 +500,7 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 \end{figure*}
 
 \begin{figure*}[ht!]
-    \centerline{\includegraphics[width=0.8\textwidth]{jupyter_example}}
+    \centerline{\includegraphics[width=0.75\textwidth]{jupyter_example}}
     \caption{\csentence{The Jupyter notebook} allows mixing of computer code (top),
              plot and text output (middle), and free-form narrative text (bottom).
              This makes it ideal to record and report code-based analyses.
@@ -552,7 +552,7 @@ good trade-off between simplicity of use for common operations, and
 accessibility to more sophisticated capabilities such as responsive
 visualizations.
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
     \centerline{\includegraphics[width=0.6\columnwidth]{mayavi_example}}
     \caption{Simple visualization realized with Mayavi.
  \label{fig:mayavi}}
@@ -838,13 +838,15 @@ X-ray images, one should be aware of current limitations of the package.
 
 \paragraph{Speed of execution.} Although \texttt{scikit-image} approaches
 the speed of execution of compiled (C++, Java) code, it cannot reach the
-performance of code optimized for the GPU. \texttt{scikit-image} is not
-the best tool for ultrafast computations where the workflow is known
-beforehand, simple and stable. However, it is an excellent tool for
-exploring image data interactively and testing different algorithms -- an
-important component of data processing in scientific work --, and its
-speed of execution is good enough to process the Gb-sized tomographic
-images in seconds to minutes.
+performance of code optimized for the GPU. At the moment,
+\texttt{scikit-image} is not the best tool for ultrafast computations
+where the workflow is known beforehand, simple and stable. However, it is
+an excellent tool for exploring image data interactively and testing
+different algorithms -- an important component of data processing in
+scientific work --, and its speed of execution is good enough to process
+the gigabyte-sized tomographic images in seconds to minutes. Moreover,
+multiprocessing capabilities of \texttt{scikit-image} should improve in
+the future.
 
 \paragraph{3-D compatibility.} At the moment, about two thirds of
 \texttt{scikit-image} functions take indifferently 2D or 3D arrays. It is
