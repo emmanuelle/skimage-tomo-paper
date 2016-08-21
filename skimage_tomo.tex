@@ -477,7 +477,7 @@ environment within a web browser, where live code can be enriched
 by explanatory text, equations and visualizations (FIGURE).
 As of July 2016, more than 500,000 Jupyter notebooks were posted on GitHub,
 demonstrating their wide adoption by the community as workflow-sharing
-tools (http://archive.ipython.org/media/SciPy2016JupyterLab.pdf).
+tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
 
 \paragraph{NumPy arrays} are the cornerstone of the Scientific Python
 ecosystem, and of \texttt{scikit-image} operations in particular.
@@ -514,7 +514,7 @@ for applications requiring advanced 3D visualization, such as tomography.
 \texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
 visualizing data passed as \texttt{numpy} arrays. For more advanced
 visualizations, a large majority of VTK capabilities can be accessed
-thanks to a pipeline API.
+through its pipeline API.
 \texttt{mayavi} offers a good trade-off between simplicity of use for
 common operations, and more advanced possibilities, including responsive
 visualizations.
@@ -532,18 +532,17 @@ functions from \texttt{skimage.feature} (see Fig.~\ref{fig:ecosystem}), it
 is then possible to use a \emph{classification} algorithm of
 \texttt{scikit-learn}, either for labeling pixels (a segmentation task)
 or to classify whole images or objects that have already been segmented.
-The interoperability between these packages is ensured by the common use
-of \texttt{NumPy} arrays, so that the tasks described above are
-implemented with a few lines of code.
+The near-universal use of \texttt{NumPy} arrays ensures the interoperability
+between these packages, so that just a few lines of code are sufficient
+to create these sophisticated workflows.
 
 The modularity of the Scientific Python ecosystem may be
-confusing at first sight. Nevertheless, core modules of this ecosystem
+confusing at first sight, but the core modules of this ecosystem
 are almost perfectly compatible, thanks to the shared use of NumPy arrays
 and common development practices (although they are developed in parallel
-by different teams). Several integrated distributions, such as Anaconda
-or Canopy, bundle together the most common packages, including
+by different teams). Several ``distributions'', such as Anaconda
+or Canopy, bundle together the most popular libraries, including
 \texttt{scikit-image}.
-
 
 \section*{Image processing capabilities}
 
@@ -562,7 +561,7 @@ or Canopy, bundle together the most common packages, including
 	\textbf{Feature extraction -} Top: Hubble deep field (NASA,
 	public domain), blob detection using the
 	Laplacian of Gaussian method. Bottom: ridge detection using the
-	leading value of the Hessian matrix. 
+	leading eigenvalue of the Hessian matrix.
 	\textbf{Segmentation - } Top: super-pixel segmentation
 	of a CT slice of the human head \citep{tomo_wikipedia}, using
 	Felzenszwalb's algorithm \citep{Felzenszwalb2004}. Bottom: random
@@ -607,10 +606,11 @@ strategies, depending on the characteristics of the image. Images with a
 clear contrast between regions can be segmented automatically thanks to
 several thresholding algorithms, including an adaptive local thresholding
 algorithm aimed at images with contrast variations. Super-pixel
-algorithms \citep{Felzenszwalb2004, Achanta2012} (see
-Fig.~\ref{fig:tomo_gallery}) create an over-segmentation of images in
+algorithms \citep{Felzenszwalb2004, Achanta2012} create an over-segmentation
+of images in
 super-pixels, by grouping pixels that are close together both in color-
-and direct space. Region-growing algorithms, such as the morphological
+and direct space (see Fig.~\ref{fig:tomo_gallery}). Region-growing
+algorithms, such as the morphological
 watershed or the random walker \citep{Grady2006}, propagate the labels
 of user-defined markers through the image (see
 Fig.~\ref{fig:tomo_gallery}). The active contour
@@ -673,9 +673,10 @@ filtered_im = util.apply_parallel(filters.gaussian, im, depth=8)
 \end{lstlisting}
 The size of chunks is determined automatically from the number of available cpus, or can be specified by the user.
 
-On a different note, prototyping the image processing workflow requires several trial and error
-executions of scripts containing different operations. The \texttt{joblib}
-module provides a caching mechanism that avoids the repetition of function
+\em{Caching} provides another tool to speed up data analysis. Prototyping an
+image processing workflow often requires several trial and error
+executions of scripts containing different operations. \texttt{joblib}
+provides a caching mechanism that avoids the repetition of function
 calls, if their arguments have not changed:
 \begin{lstlisting}
 >>> from skimage import filters, data
@@ -696,39 +697,41 @@ __________________________median - 0.0s, 0.0min
 >>> # the above call did not trigger an evaluation
 \end{lstlisting}
 
-Finally, let us note that the biggest performance improvements often come from
+Finally, we note that the biggest performance improvements often come from
 the improvement of algorithms (as opposed to computing architectures only). For
 example, non-local means denoising \citep{Buades2005} is a costly operation,
 since it requires several nested loops, on all pixels and on neighboring
 patches to be compared with the pixel-centered patch. Thanks to the
 implementation of a more recent algorithm \citep{Darbon2008} that modifies the
-internal organization of loops, it was possible to gain a factor of 5 to 10.
+internal organization of loops, it was possible to gain a 5- to 10-fold speedup.
 The large size of the \texttt{scikit-image} community ensures that possible
 algorithmic improvements are discussed regularly.
 
 \section*{Documentation and getting help}
 
-The quality of software documentation is an important component to the
-success of a package aimed at scientists.
+The quality of the documentation is an important component to the
+success of a software package.
 \texttt{scikit-image} users have access to different kinds of
-documentation. Functions of the API are all
-documented using the same standard \citep{Pawlik2015} as other major
-Scientific Python packages. The standard include a description of all
+documentation. All functions are
+documented using the NumPy documentation standard \citep{Pawlik2015},
+which is universal across all major
+Scientific Python packages. The standard includes a description of all
 input and output variables and their data type, together with
 explanations on what the function does and how to use it. Function
-documentation is accessed either online, or within the development
-environment (IPython, Spyder, Jupyter Notebook...). 
+documentation is accessible online or within the development
+environment itself (IPython, Spyder, Jupyter Notebook...).
 
 \begin{figure*}
     \centerline{\includegraphics[width=0.99\textwidth]{figure_gallery}}
 \caption{\csentence{Gallery of examples of \texttt{scikit-image}.}
- The gallery of examples consists of an array of thumbnails (left part), which link to example webpages, each centerered on a specific image processing task. Each webpage includes Python code generating a figure, the figure itself, as well as a short tutorial explaining the image processing operations and the code. \label{fig:gallery}}
+ The gallery of examples consists of an array of thumbnails (left), which link to example webpages, each centerered on a specific image processing task. Each webpage includes Python code generating a figure, the figure itself, and a short tutorial explaining the image processing operations and the code. \label{fig:gallery}}
 \end{figure*}
 
 In addition, a popular documentation tool is the graphical gallery of
-examples (\nolinkurl{http://scikit-image.org/docs/dev/auto_examples/}), a part of which is displayed in Fig.~\ref{fig:gallery}.
+examples (\nolinkurl{http://scikit-image.org/docs/dev/auto_examples/}),
+an example of which appears in Fig.~\ref{fig:gallery}.
 The principle of the gallery is to accelerate the learning curve of image
-processing, by showcasing graphical examples of image processing
+processing, by showcasing graphical examples of common image processing
 operations. Such examples are organized as an array of thumbnails with a
 short title (see Fig.~\ref{fig:gallery} left). These thumbnails link to
 the webpage of the corresponding example, which features a mini-tutorial
@@ -738,8 +741,8 @@ efficient way to inform users about the features of
 \texttt{scikit-image}, every new feature integrated in the package must
 include an example for the gallery.
 Longer tutorials and a more narrative documentation is available as well
-in the online User Guide of \texttt{scikit-image}. The User Guide explains in
-particular "big picture" aspects of \texttt{scikit-image}, such as its
+in the online User Guide, which explains
+"big picture" aspects of \texttt{scikit-image}, such as its
 use of \texttt{NumPy} arrays as images, or how the package interacts with
 other parts of the scientific Python ecosystem.
 
@@ -755,22 +758,22 @@ Python tutorials.
 Estimating the number of active users of an open-source package is a
 difficult task. Statistics of downloads, for example, largely
 overestimate the number of active users, all the more if the package is
-bundled with others in a software distribution, like Anaconda or
+bundled with others in a software distribution, such as Anaconda or
 Canopy. A view closer to reality can be obtained by analyzing the
 statistics of visits of the online help, available on the project
 website.  As of the first half of 2016, 20000 unique visitors visit the
 website of scikit-image every month \url{http://scikit-image.org/}. These
 users come from 80 countries, located almost equally in Europe, America
-and Asia (Oceania and Africa representing a much smaller fraction of
+and Asia (with Oceania and Africa representing a much smaller fraction of
 visitors).
 
 \paragraph{Development process.}
 
-\texttt{scikit-image} is developed by a diverse team of volunteers, with
-more than 170 developers that have contributed to the package. The large
+\texttt{scikit-image} is developed by a diverse team of volunteers.
+More than 170 individuals have contributed to the package. The large
 number of developers and users is a key element of the sustainability of
 \texttt{scikit-image}. The
-development process takes place on the GitHub platform
+development process takes place on GitHub
 \url{https://github.com/scikit-image/scikit-image}, where users and
 developers propose and discuss new contributions, or report bugs or ideas
 for improvements.
@@ -791,7 +794,7 @@ domain-specific tools are now using \texttt{scikit-image} as a dependency
 to build upon. Examples include \texttt{tomopy} \citep{Gursoy2014} for
 tomographic reconstruction, or \texttt{DIOPTAS} \citep{Prescher2015} for
 the reduction and exploration of X-ray diffraction data. It is likely
-that more application-specific softwares will benefit from depending on
+that more application-specific software will benefit from depending on
 \texttt{scikit-image} in the future, since \texttt{scikit-image} strives
 to be domain-agnostic and to keep a stable interface. On the end-user
 side, future work includes a better integration of parallel processing
