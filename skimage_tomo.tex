@@ -630,10 +630,10 @@ skeleton.
 
 \paragraph{Performance.}
 
-Given the large size of tomography datasets, the speed of execution of image
-processing operations is a critical issue. \texttt{scikit-image} relies mostly
-on calls to \texttt{NumPy} operations, with most of them that are performed in
-optimized compiled code (C or Fortran). Performance-critical parts of the code
+Given the large size of tomography datasets, the execution speed of image
+processing operations is of critical concern. \texttt{scikit-image} relies mostly
+on calls to \texttt{NumPy} operations, of which most are performed in
+optimized compiled code (C or Fortran). Performance-critical parts of \texttt{scikit-image}
 that cannot call efficient \texttt{NumPy} code are implemented in
 \texttt{Cython}. \texttt{Cython} \citep{Behnel2011} is an extension of the
 Python language that supports explicit type declarations, and is compiled
@@ -641,8 +641,8 @@ directly to C.
 
 However, basic \texttt{scikit-image} code runs on a single core. Computing
 workstations and servers used for X-ray imaging typically have several tens of
-cores. Parallelization of the computing workflow can be achieved in different
-ways. The most trivial parallelization scheme consists in applying the same
+cores. Parallelization of the computing workflow can be achieved in multiple
+ways. The most trivial parallelization scheme consists of applying the same
 workflow to different images, on different cores. However, finer-grained
 parallelization is preferable when prototyping the processing workflow.
 
@@ -671,10 +671,11 @@ filtered_im = util.apply_parallel(filters.gaussian, im, depth=8)
 \end{lstlisting}
 The size of chunks is determined automatically from the number of available cpus, or can be specified by the user.
 
-On a different note, prototyping the image processing workflow requires several trial and error
-executions of scripts containing different operations. The \texttt{joblib}
+Another situation that often arises is that, while prototyping a
+workflow, scripts (containing the image processing pipeline) are run
+several times to experiment with parameters. The \texttt{joblib}
 module provides a caching mechanism that avoids the repetition of function
-calls, if their arguments have not changed:
+calls if their arguments have not changed:
 \begin{lstlisting}
 >>> from skimage import filters, data
 >>> from joblib import Memory
@@ -691,7 +692,7 @@ median(array([[156, ..., 152],
        [ 1.,  1.,  1.]]))
 __________________________median - 0.0s, 0.0min
 >>> filtered_again = median(im, np.ones((3, 3)))
->>> # the above call did not trigger an evaluation
+>>> # the above call did not trigger another evaluation
 \end{lstlisting}
 
 Finally, let us note that the biggest performance improvements often come from
@@ -700,20 +701,21 @@ example, non-local means denoising \citep{Buades2005} is a costly operation,
 since it requires several nested loops, on all pixels and on neighboring
 patches to be compared with the pixel-centered patch. Thanks to the
 implementation of a more recent algorithm \citep{Darbon2008} that modifies the
-internal organization of loops, it was possible to gain a factor of 5 to 10.
-The large size of the \texttt{scikit-image} community ensures that possible
-algorithmic improvements are discussed regularly.
+internal organization of loops, it was possible to improve execution
+time by a factor of roughly ten times.
+The large size of the \texttt{scikit-image} community makes it likely for
+algorithmic improvements to be discussed regularly.
 
 \section*{Documentation and getting help}
 
-The quality of software documentation is an important component to the
-success of a package aimed at scientists.
-\texttt{scikit-image} users have access to different kinds of
+The quality of software documentation is (perhaps especially)
+important in software aimed at scientists.
+\texttt{scikit-image} users have access to several kinds of
 documentation. Functions of the API are all
 documented using the same standard \citep{Pawlik2015} as other major
 Scientific Python packages. The standard include a description of all
-input and output variables and their data type, together with
-explanations on what the function does and how to use it. Function
+input and output variables and their data types, together with
+explanations of what each function does and how to use it. Function
 documentation is accessed either online, or within the development
 environment (IPython, Spyder, Jupyter Notebook...). 
 
@@ -723,11 +725,11 @@ environment (IPython, Spyder, Jupyter Notebook...).
  The gallery of examples consists of an array of thumbnails (left part), which link to example webpages, each centerered on a specific image processing task. Each webpage includes Python code generating a figure, the figure itself, as well as a short tutorial explaining the image processing operations and the code. \label{fig:gallery}}
 \end{figure*}
 
-In addition, a popular documentation tool is the graphical gallery of
-examples (\nolinkurl{http://scikit-image.org/docs/dev/auto_examples/}), a part of which is displayed in Fig.~\ref{fig:gallery}.
-The principle of the gallery is to accelerate the learning curve of image
-processing, by showcasing graphical examples of image processing
-operations. Such examples are organized as an array of thumbnails with a
+In addition, a graphical gallery of examples
+(\nolinkurl{http://scikit-image.org/docs/dev/auto_examples/}),
+part of which is displayed in Fig.~\ref{fig:gallery},
+showcases graphical examples of image processing
+operations.  The examples are organized as an array of thumbnails with a
 short title (see Fig.~\ref{fig:gallery} left). These thumbnails link to
 the webpage of the corresponding example, which features a mini-tutorial
 on the image processing method, the code needed to run the example and
@@ -737,7 +739,7 @@ efficient way to inform users about the features of
 include an example for the gallery.
 Longer tutorials and a more narrative documentation is available as well
 in the online User Guide of \texttt{scikit-image}. The User Guide explains in
-particular "big picture" aspects of \texttt{scikit-image}, such as its
+particular "big picture", foundational aspects of \texttt{scikit-image}, such as its
 use of \texttt{NumPy} arrays as images, or how the package interacts with
 other parts of the scientific Python ecosystem.
 
@@ -751,13 +753,13 @@ Python tutorials.
 \paragraph{Who uses scikit-image.}
 
 Estimating the number of active users of an open-source package is a
-difficult task. Statistics of downloads, for example, largely
+difficult task. Download statistics, for example, largely
 overestimate the number of active users, all the more if the package is
 bundled with others in a software distribution, like Anaconda or
 Canopy. A view closer to reality can be obtained by analyzing the
 statistics of visits of the online help, available on the project
-website.  As of the first half of 2016, 20000 unique visitors visit the
-website of scikit-image every month \url{http://scikit-image.org/}. These
+website.  As of the first half of 2016, 20000 unique visitors visited the
+\texttt{scikit-image} website every month at \url{http://scikit-image.org/}. These
 users come from 80 countries, located almost equally in Europe, America
 and Asia (Oceania and Africa representing a much smaller fraction of
 visitors).
@@ -765,36 +767,36 @@ visitors).
 \paragraph{Development process.}
 
 \texttt{scikit-image} is developed by a diverse team of volunteers, with
-more than 170 developers that have contributed to the package. The large
+more than 170 developers having contributed to the package. The large
 number of developers and users is a key element of the sustainability of
 \texttt{scikit-image}. The
 development process takes place on the GitHub platform
 \url{https://github.com/scikit-image/scikit-image}, where users and
-developers propose and discuss new contributions, or report bugs or ideas
+developers propose and discuss new contributions, report bugs or submit ideas
 for improvements.
 A release cycle of one or two releases every year
-ensures that new features are proposed to users on a regular basis.
+ensures that new features are propagated to users on a regular basis.
 
 \section*{Conclusion}
 
 \texttt{scikit-image} offers a wide variety of image processing
 algorithms, using a simple interface natively compatible with 2D and 3D
 images. It is well integrated into the Scientific Python ecosystem, so
-that it interfaces well with visualization libraries or other data
-processing packages. \texttt{scikit-image} has seen a tremendous growth
-since its creation in 2010, both in terms of users and proposed features.
+that it interfaces well with visualization libraries and other data
+processing packages. \texttt{scikit-image} has seen tremendous growth
+since its creation in 2009, both in terms of users and proposed features.
 In addition to the growing number of scientific teams that use
-\texttt{scikit-image} for processing X-ray-modalities images,
+\texttt{scikit-image} for processing images of various X-ray modalities,
 domain-specific tools are now using \texttt{scikit-image} as a dependency
 to build upon. Examples include \texttt{tomopy} \citep{Gursoy2014} for
 tomographic reconstruction, or \texttt{DIOPTAS} \citep{Prescher2015} for
 the reduction and exploration of X-ray diffraction data. It is likely
-that more application-specific softwares will benefit from depending on
+that more application-specific software will benefit by depending on
 \texttt{scikit-image} in the future, since \texttt{scikit-image} strives
-to be domain-agnostic and to keep a stable interface. On the end-user
-side, future work includes a better integration of parallel processing
+to be domain-agnostic and to keep the function interface stable. On the end-user
+side, future work includes better integration of parallel processing
 capabilities, completion of full 3-D compatibility, an enriched narrative
-documentation, and the extension of the number of algorithms.
+documentation, speed enhancements, and expansion of the set of supported algorithms.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
