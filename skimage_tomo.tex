@@ -497,7 +497,7 @@ demonstrating their wide adoption by the community as workflow-sharing
 tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
 
 \begin{figure*}
-    \centerline{\includegraphics[width=0.99\textwidth]{jupyter_example}}
+    \centerline{\includegraphics[width=0.8\textwidth]{jupyter_example}}
     \caption{\csentence{The Jupyter notebook} allows mixing of computer code (top),
              plot and text output (middle), and free-form narrative text (bottom).
              This makes it ideal to record and report code-based analyses.
@@ -556,25 +556,25 @@ or Canopy, bundle together the most popular libraries, including
 \begin{figure*}
     \centerline{\includegraphics[width=0.99\textwidth]{tomo_gallery}}
     \caption{\csentence{Typical image processing operations with
-	\texttt{scikit-image}.} From left to right and top to bottom.
+	\texttt{scikit-image}.}
 	Data are synthetic, unless stated otherwise.
-	\textbf{Filtering -} Top: non-local means denoising of an image
+	\textbf{a) Filtering -} Top: non-local means denoising of an image
 	with a fine-grained texture, acquired by \emph{in situ}
 	synchrotron microtomography during
 	glass melting \citep{Gouillart2012}. Bottom: total-variation
 	denoising of an image with two phases, corresponding to
 	phase-separating silicate melts observed by \emph{in situ
 	tomography} \citep{Bouttes2015}.
-	\textbf{Feature extraction -} Top: Hubble deep field (NASA,
+	\textbf{b) Feature extraction -} Top: Hubble deep field (NASA,
 	public domain), blob detection using the
 	Laplacian of Gaussian method. Bottom: ridge detection using the
 	leading eigenvalue of the Hessian matrix.
-	\textbf{Segmentation - } Top: super-pixel segmentation
+	\textbf{c) Segmentation - } Top: super-pixel segmentation
 	of a CT slice of the human head \citep{tomo_wikipedia}, using
 	Felzenszwalb's algorithm \citep{Felzenszwalb2004}. Bottom: random
 	walker segmentation (right) of noisy image (top-left corner), using
 	histogram-determined markers (bottom-left corner).
-	\textbf{Measures -} Top: visualization of local diameter
+	\textbf{d) Measures -} Top: visualization of local diameter
 	(color-coded on the skeleton curve) of an
 	interconnected phase (represented in violet).  Bottom: particles color-coded according
 	to their extent.
@@ -593,18 +593,18 @@ ratio. Several denoising filters are available for restoring these
 images, ranging from general-purpose median and bilateral
 filters to those more suited to specific applications. For example, total-variation denoising \citep{Chambolle2004,
 Getreuer2012} is ideal for restoring piecewise-constant images (see
-Fig.~\ref{fig:tomo_gallery}), such as images with a small number of
+Fig.~\ref{fig:tomo_gallery} a)), such as images with a small number of
 phases encountered in materials science \citep{Bouttes2015}. Conversely,
 images with a fine-grained texture are better preserved with non-local
-means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery}).
+means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery} a)).
 
 \texttt{scikit-image} offers a wide variety of functions for detecting
 geometrical features of interest in an image. Peaks in 2D
 diffraction images can be extracted using blob detection methods
 \citep{Ashiotis2015}, such as the Laplacian of Gaussian method (see
-Fig.~\ref{fig:tomo_gallery}). In order to detect thin boundaries, the
+Fig.~\ref{fig:tomo_gallery} b)). In order to detect thin boundaries, the
 ridges of an image can be identified as regions for which the leading eigenvalue
-of the local Hessian matrix is high (see Fig.~\ref{fig:tomo_gallery}).
+of the local Hessian matrix is high (see Fig.~\ref{fig:tomo_gallery} b)).
 
 Segmentation of regions of interest can be achieved using one of various
 strategies, depending on the characteristics of the image. Images with a
@@ -614,10 +614,10 @@ algorithm aimed at images with contrast variations. Super-pixel
 algorithms \citep{Felzenszwalb2004, Achanta2012} create an
 over-segmentation of images in super-pixels, by grouping pixels that are
 close together both in color- and spatial distance (see
-Fig.~\ref{fig:tomo_gallery}). Region-growing algorithms, such as the
+Fig.~\ref{fig:tomo_gallery} c)). Region-growing algorithms, such as the
 morphological watershed or the random walker \citep{Grady2006}, propagate
 the labels of user-defined markers through the image (see
-Fig.~\ref{fig:tomo_gallery}). The active contour algorithm
+Fig.~\ref{fig:tomo_gallery} c)). The active contour algorithm
 \citep{Kass1988} fits snake contours to features of the image, such as
 edges or high-brightness regions.
 
@@ -627,9 +627,9 @@ The characteristics of labeled regions (particles, porosities, organs,
 bubbles or non-touching particles) of a binary image are labeled with the
 \texttt{measure.label} function. Properties of labeled regions such as
 size, extent, center of mass or mean intensity value are accessed with
-\texttt{measure.regionprops} (see Fig.~\ref{fig:tomo_gallery}). Local
+\texttt{measure.regionprops} (see Fig.~\ref{fig:tomo_gallery} d)). Local
 characteristics of a region can be retrieved as well:
-Fig.~\ref{fig:tomo_gallery} shows how the local diameter of open
+Fig.~\ref{fig:tomo_gallery} d) shows how the local diameter of open
 porosity is measured by combining a skeletonization of the porosity
 channels, and the distance transform to the other phase measured on the
 skeleton.   
