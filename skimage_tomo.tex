@@ -488,15 +488,7 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
  \label{fig:spyder}}
 \end{figure*}
 
-The Jupyter notebook \citep{Kluyver2016} is a web application that grew
-out of the IPython project. Jupyter notebooks provide an interactive development
-environment within a web browser, where live code can be enriched
-by explanatory text, equations and visualizations (Fig.~\ref{fig:jupyter}).
-As of July 2016, more than 500,000 Jupyter notebooks were posted on GitHub,
-demonstrating their wide adoption by the community as workflow-sharing
-tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
-
-\begin{figure*}
+\begin{figure*}[ht!]
     \centerline{\includegraphics[width=0.8\textwidth]{jupyter_example}}
     \caption{\csentence{The Jupyter notebook} allows mixing of computer code (top),
              plot and text output (middle), and free-form narrative text (bottom).
@@ -505,7 +497,17 @@ tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
  \label{fig:jupyter}}
 \end{figure*}
 
+The Jupyter notebook \citep{Kluyver2016} is a web application that grew
+out of the IPython project. Jupyter notebooks provide an interactive development
+environment within a web browser, where live code can be enriched
+by explanatory text, equations and visualizations (Fig.~\ref{fig:jupyter}).
+As of July 2016, more than 500,000 Jupyter notebooks were posted on GitHub,
+demonstrating their wide adoption by the community as workflow-sharing
+tools (\url{http://archive.ipython.org/media/SciPy2016JupyterLab.pdf}).
+
+
 \paragraph{Visualization libraries.}
+
 
 Visualizing images is an important component of the image processing
 workflow, used to inspect the final result and to adjust the
@@ -518,13 +520,31 @@ of segmented regions, histograms of gray levels, etc. Although
 recommend using the \texttt{mayavi} module \citep{Ramachandran2011}
 for applications requiring advanced 3D visualization, such as tomography. 
 \texttt{mayavi} is based on the VTK toolkit. It exposes a simple API for
-visualizing data passed as \texttt{numpy} arrays. For more advanced
-visualizations, a large majority of VTK capabilities can be accessed
-through mayavi's pipeline API.
-\texttt{mayavi} offers a good trade-off between simplicity of use for
-common operations, and accessibility to more sophisticated
-capabilities such as responsive
+visualizing data passed as \texttt{numpy} arrays. For example,
+visualizing the surface of binary data can be written as
+\begin{lstlisting}[language=Python]
+# synthetic binary array from skimage.data
+im = data.binary_blobs(length=400, n_dim=3).astype(np.uint8)
+# visualization
+from mayavi import mlab
+mlab.contour3d(im)
+mlab.outline()
+\end{lstlisting}
+(see Fig.~\ref{fig:mayavi} for the resulting visualization).
+
+For more advanced visualizations, a large majority of VTK capabilities
+can be accessed through mayavi's pipeline API. \texttt{mayavi} offers a
+good trade-off between simplicity of use for common operations, and
+accessibility to more sophisticated capabilities such as responsive
 visualizations.
+
+\begin{figure}[ht]
+    \centerline{\includegraphics[width=0.6\columnwidth]{mayavi_example}}
+    \caption{Simple visualization realized with Mayavi.
+ \label{fig:mayavi}}
+\end{figure}
+
+
 
 \paragraph{Advanced toolkits for signal processing and data science.}
 
