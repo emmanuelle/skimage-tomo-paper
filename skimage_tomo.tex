@@ -231,7 +231,7 @@
     scientific Python ecosystem that contains many powerful libraries for
     tasks such as visualization or machine learning.
     \texttt{scikit-image} combines a gentle learning curve, versatile
-    image processing capabilities, and the scalable performances required
+    image processing capabilities, and the scalable performance required
     for the high-throughput analysis of X-ray imaging data.
 
 \end{abstract}
@@ -295,8 +295,8 @@
 The acquisition time of synchrotron tomography images has decreased
 dramatically over the last decade, from hours to
 seconds \citep{Maire2014}. New modalities such as single-bunch
-imaging \citep{Rack2014} provide a time resolution down to the nanosecond
-for radiography. However, the time subsequently spent in processing the
+imaging provide a time resolution down to the nanosecond
+for radiography \citep{Rack2014}. However, the time subsequently spent in processing the
 images has not decreased as much, so that the outcome of a successful
 synchrotron imaging run often takes weeks or even months to be
 transformed into scientific results. 
@@ -319,7 +319,7 @@ and the wealth of plugins contributed by a vivid community
 \citep{Schindelin2015}. For 3-D images, commercial tools such as Avizo 3D
 software (TM) are appreciated for an intuitive graphical pipeline and
 advanced 3D visualization. Alternatively, the use of a programming
-language gives finer control, a better reproducibility and more
+language gives finer control, better reproducibility, and more complex analysis
 possibilities, provided classical processing algorithms can be called
 from libraries -- thereby limiting the complexity of the programming task
 and the risk of bugs. Matlab (TM) and its image processing toolbox are
@@ -844,13 +844,14 @@ where the workflow is known beforehand, simple and stable. However, it is
 an excellent tool for exploring image data interactively and testing
 different algorithms -- an important component of data processing in
 scientific work --, and its speed of execution is good enough to process
-the gigabyte-sized tomographic images in seconds to minutes. Moreover,
-multiprocessing capabilities of \texttt{scikit-image} should improve in
-the future.
+gigabyte-sized tomographic images in seconds to minutes. Moreover,
+the multiprocessing capability of \texttt{scikit-image} should improve in
+the near future.
 
 \paragraph{3-D compatibility.} At the moment, about two thirds of
-\texttt{scikit-image} functions take indifferently 2D or 3D arrays. It is
-planned to increase this compatibility in the future.
+\texttt{scikit-image} functions transparently handle 2D or 3D arrays, with
+the remainder limited to 2D analysis, often unnecessarily. Improved support
+for 3D and higher-dimensional volumes is in the project roadmap, however.
 
 \paragraph{Documentation for domain-specific applications.} Some image
 processing libraries or applications address a specific scientific
@@ -894,7 +895,7 @@ algorithms, using a simple interface natively compatible with 2D and 3D
 images. It is well integrated into the Scientific Python ecosystem, so
 that it interfaces well with visualization libraries and other data
 processing packages. \texttt{scikit-image} has seen tremendous growth
-since its creation in 2009, both in terms of users and proposed features.
+since its creation in 2009, both in terms of users and included features.
 In addition to the growing number of scientific teams that use
 \texttt{scikit-image} for processing images of various X-ray modalities,
 domain-specific tools are now using \texttt{scikit-image} as a dependency
