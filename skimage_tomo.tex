@@ -844,13 +844,14 @@ where the workflow is known beforehand, simple and stable. However, it is
 an excellent tool for exploring image data interactively and testing
 different algorithms -- an important component of data processing in
 scientific work --, and its speed of execution is good enough to process
-the gigabyte-sized tomographic images in seconds to minutes. Moreover,
-multiprocessing capabilities of \texttt{scikit-image} should improve in
-the future.
+gigabyte-sized tomographic images in seconds to minutes. Moreover,
+the multiprocessing capability of \texttt{scikit-image} should improve in
+the near future.
 
 \paragraph{3-D compatibility.} At the moment, about two thirds of
-\texttt{scikit-image} functions take indifferently 2D or 3D arrays. It is
-planned to increase this compatibility in the future.
+\texttt{scikit-image} functions transparently handle 2D or 3D arrays, with
+the remainder limited to 2D analysis, often unnecessarily. Improved support
+for 3D and higher-dimensional volumes is in the project roadmap, however.
 
 \paragraph{Documentation for domain-specific applications.} Some image
 processing libraries or applications address a specific scientific
