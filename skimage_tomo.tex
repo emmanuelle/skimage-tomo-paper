@@ -825,8 +825,7 @@ science \citep{Bouttes2015} or geoscience \citep{Schluter2014}.
 
 \texttt{scikit-image} is developed by a diverse team of volunteers.
 More than 170 individuals have contributed to the package. The large
-number of developers and users is a key element of the sustainability of
-\texttt{scikit-image}. The
+number of developers and users key to project's sustainability. The
 development process takes place on GitHub
 \url{https://github.com/scikit-image/scikit-image}, where users and
 developers propose and discuss new contributions, report bugs or submit ideas
@@ -836,25 +835,26 @@ ensures that new features are propagated to users on a regular basis.
 
 \section*{Discussion -- Current limitations and challenges}
 
-While we have insisted on the assets of \texttt{scikit-image} for processing
-X-ray images, one should be aware of current limitations of the package.
+While we emphasize the assets of \texttt{scikit-image} for processing
+X-ray images, one should be aware of current limitations.
 
 \paragraph{Speed of execution.} Although \texttt{scikit-image} approaches
 the speed of execution of compiled (C++, Java) code, it cannot reach the
-performance of code optimized for the GPU. At the moment,
+performance of code optimized for the GPU, or the hand-tuned
+CPU-specific optimizations found in OpenCV. At the moment,
 \texttt{scikit-image} is not the best tool for ultrafast computations
 where the workflow is known beforehand, simple and stable. However, it is
 an excellent tool for exploring image data interactively and testing
 different algorithms -- an important component of data processing in
-scientific work --, and its speed of execution is good enough to process
+scientific work --, and its speed of execution is sufficient for processing
 gigabyte-sized tomographic images in seconds to minutes. Moreover,
-the multiprocessing capability of \texttt{scikit-image} should improve in
+the multiprocessing capability of \texttt{scikit-image} is likely to improve in
 the near future.
 
-\paragraph{3-D compatibility.} At the moment, about two thirds of
+\paragraph{3-D compatibility.} Currently, about two thirds of
 \texttt{scikit-image} functions transparently handle 2D or 3D arrays, with
 the remainder limited to 2D analysis, often unnecessarily. Improved support
-for 3D and higher-dimensional volumes is in the project roadmap, however.
+for 3D and higher-dimensional volumes is on the project roadmap.
 
 \paragraph{Documentation for domain-specific applications.} Some image
 processing libraries or applications address a specific scientific
@@ -865,31 +865,31 @@ Since \texttt{scikit-image} is application-agnostic,
 applications such as tomographic imaging are not mentioned in detail in the
 documentation of \texttt{scikit-image}. A possible improvement would be
 to write comprehensive tutorials addressing specific communities, and to
-reference these tutorials from the main \texttt{scikit-image}
+refer to these tutorials from the main \texttt{scikit-image}
 documentation.
 
 \section*{Getting started}
 
 Scientists interested in experimenting with \texttt{scikit-image} are
-invited to read the installation instructions on
+invited to read the installation instructions at
 \url{http://scikit-image.org/docs/stable/install.html}.
 \texttt{scikit-image} can be installed either bundled in a Scientific
-Python distribution, such as Anaconda or Canopy, or alone (with its
-dependencies) using a installer/packager program such as pip or Ubuntu's
-Synaptic.
+Python distribution, such as Anaconda or Canopy, or stand alone (along with its
+dependencies) using an installer/packager such as pip or Ubuntu's
+Aptitude.
 
-The Getting started section of the online User Guide
+The Getting Started section of the online User Guide
 (\url{http://scikit-image.org/docs/dev/user_guide/getting_started.html})
-is a good starting point, as well as the other sections of the user
-guide. Examples of the gallery
-(\url{http://scikit-image.org/docs/dev/auto_examples/}) can be used to
-find applications close to one's needs. Although most examples of the
-gallery use 2D images, most functions can be used with 3D images as well.
+provides a good launch pad for beginners, and gently leads into other sections of the user
+guide. A gallery of examples
+(\url{http://scikit-image.org/docs/dev/auto_examples/}) lets users
+find applications close to their needs. Although most examples in the
+gallery use 2D images, many are applicable to 3D images as well.
 
-Assistance on matters not covered by the documentation is provided to
-users either on the dedicated mailing-list
-\url{scikit-image@googlegroups.com} or on StackOverflow
-\url{http://stackexchange.com/filters/87964/scikit-image}.
+Assistance on matters not covered by the documentation is provided on
+the dedicated mailing-list \url{scikit-image@googlegroups.com} or on
+StackOverflow
+\url{http://stackoverflow.com/questions/tagged/scikit-image}.
 
 \section*{Conclusion}
 
