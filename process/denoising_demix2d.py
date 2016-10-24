@@ -1,4 +1,3 @@
-import numpy as np
 from skimage import restoration, io
 import matplotlib.pyplot as plt
 

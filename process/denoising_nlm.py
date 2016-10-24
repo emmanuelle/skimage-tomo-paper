@@ -1,4 +1,3 @@
-import numpy as np
 from skimage import restoration, io, img_as_float
 import matplotlib.pyplot as plt
 
