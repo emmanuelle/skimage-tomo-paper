@@ -1,5 +1,5 @@
 import numpy as np
-from skimage import data, measure, morphology
+from skimage import data, morphology
 from scipy import ndimage
 
 im = data.binary_blobs(length=400, n_dim=3, volume_fraction=0.33, seed=0)
