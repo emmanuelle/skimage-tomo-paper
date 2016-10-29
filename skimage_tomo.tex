@@ -123,7 +123,8 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Analyzing X-ray images in Python with scikit-image}
+\title{Analyzing microtomography data with Python and the scikit-image
+library}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -313,39 +314,48 @@ while adjusting the workflow.
 
 Several software applications and libraries are available to synchrotron
 users to process their images. ImageJ \citep{Abramoff2004, Schneider2012}
-and its distribution Fiji \citep{Schindelin2012} is a popular tool for
-2-D and 3-D images, thanks to its intuitive menus and graphical tools,
-and the wealth of plugins contributed by a vivid community
-\citep{Schindelin2015}. For 3-D images, commercial tools such as Avizo 3D
-software (TM) are appreciated for an intuitive graphical pipeline and
-advanced 3D visualization. Alternatively, the use of a programming
-language gives finer control, better reproducibility, and more complex analysis
-possibilities, provided classical processing algorithms can be called
-from libraries -- thereby limiting the complexity of the programming task
-and the risk of bugs. Matlab (TM) and its image processing toolbox are
-popular in the academic community of computer vision and image
-processing. The Python language is widely used in the scientific world
-and in synchrotron facilities. As a general-purpose language, Python is
-used in synchrotrons to control device servers \citep{pytango}, to access
-raw data of X-ray detectors \citep{Knudsen2013}, to reconstruct
-tomography volumes from radiographs \citep{Gursoy2014, Mirone2014}, and
-in data processing packages for macromolecular cristallography
-\citep{Adams2010}, azimuthal integration of diffraction data
-\citep{Ashiotis2015}, or fluorescence analysis \citep{pymca}.
+and its distribution Fiji \citep{Schindelin2012} is a popular
+general-purpose tool for 2-D and 3-D images, thanks to its intuitive
+menus and graphical tools, and the wealth of plugins contributed by a
+vivid community \citep{Schindelin2015}. Software specialized in analyzing
+synchrotron data are available as well, such as XRDUA~\citep{xrdua} for
+diffraction images obtained in powder diffraction analysis, or  For 3-D
+images, commercial tools such as Avizo 3D software (TM), or
+ToolIP/MaviKit~\citep{mavi} are appreciated
+for an intuitive graphical pipeline and advanced 3D visualization. Some
+synchrotrons have even developed their own tools for volume processing,
+such as Pore3D~\citep{Brun2010} at the Elettra facility. Alternatively,
+the use of a programming language gives finer control, better
+reproducibility, and more complex analysis possibilities, provided
+classical processing algorithms can be called from libraries -- thereby
+limiting the complexity of the programming task and the risk of bugs.
+Matlab (TM) and its image processing toolbox are popular in the academic
+community of computer vision and image processing. The Python language is
+widely used in the scientific world and in synchrotron facilities. As a
+general-purpose language, Python is used in synchrotrons to control
+device servers \citep{pytango, Sugandhi2016, nsls-ii}, to access raw data
+of X-ray detectors \citep{Knudsen2013}, to reconstruct tomography volumes
+from radiographs \citep{Gursoy2014, Mirone2014}, and in data processing
+packages for macromolecular cristallography \citep{Adams2010}, azimuthal
+integration of diffraction data \citep{Ashiotis2015}, or fluorescence
+analysis \citep{pymca, Sole2007}. 
 
-\texttt{scikit-image} \citep{Vanderwalt2014} is a general-purpose image
-processing library for the Python language, and a component of the ecosystem of
-Python scientific modules commonly known as Scientific
-Python \citep{Oliphant2007}. Like the rest of the ecosystem,
-\texttt{scikit-image} is released under a permissive open-source license and is
-available free of charge. Most of \texttt{scikit-image} is compatible with both 2-D and
-3-D images, so that it can be used for a large number of imaging modalities,
-such as microscopy, radiography or tomography. In this article, we explain how
-\texttt{scikit-image} can be used for processing data acquired in X-ray
-imaging experiments, with a focus on microtomography 3-D images. This
-article does not intend to be a pedagogical tutorial on \texttt{scikit-image}
-for X-ray imaging, but rather to explain the rationale behind the package, and
-provide various examples of its capabilities.
+%\vskip 1cm 
+\texttt{scikit-image}
+\citep{Vanderwalt2014} is a general-purpose image processing library for
+the Python language, and a component of the ecosystem of Python
+scientific modules commonly known as Scientific Python
+\citep{Oliphant2007}. Like the rest of the ecosystem,
+\texttt{scikit-image} is released under a permissive open-source license
+and is available free of charge. Most of \texttt{scikit-image} is
+compatible with both 2-D and 3-D images, so that it can be used for a
+large number of imaging modalities, such as microscopy, radiography or
+tomography. In this article, we explain how \texttt{scikit-image} can be
+used for processing data acquired in X-ray imaging experiments, with a
+focus on microtomography 3-D images. This article does not intend to be a
+pedagogical tutorial on \texttt{scikit-image} for X-ray imaging, but
+rather to explain the rationale behind the package, and provide various
+examples of its capabilities.
 
 
 \section*{Methods -- Overview and first steps}
@@ -356,7 +366,7 @@ Python is a programming language, the user interacts with data objects and
 images through code, which is either entered and executed in an interactive
 interpreter, or written in text files (so-called scripts) that are executed. 
 
-\begin{figure*}
+\begin{figure*}[!htb]
     \centerline{\includegraphics[width=0.77\textwidth]{ecosystem_landscape}}
     \caption{\csentence{\texttt{scikit-image} and the Scientific Python
 	ecosystem}. Images are opened from files as \texttt{NumPy}
@@ -492,7 +502,7 @@ Integrated Development Environments (IDEs) come bundled with IPython,
 together with other components such as a text editor. Notable examples
 include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
 
-\begin{figure*}[ht!]
+\begin{figure*}[!htb]
     \centerline{\includegraphics[width=0.99\textwidth]{spyder_process}}
     \caption{\csentence{The Spyder IDE} integrates a text editor (with
 	syntax highlighting), the IPython interpreter, as well as a panel
@@ -500,7 +510,7 @@ include Spyder (Fig.~\ref{fig:spyder}), PyCharm, and Visual Studio Code.
  \label{fig:spyder}}
 \end{figure*}
 
-\begin{figure*}[ht!]
+\begin{figure*}[!htb]
     \centerline{\includegraphics[width=0.75\textwidth]{jupyter_example}}
     \caption{\csentence{The Jupyter notebook} allows mixing of computer code (top),
              plot and text output (middle), and free-form narrative text (bottom).
@@ -553,13 +563,6 @@ good trade-off between simplicity of use for common operations, and
 accessibility to more sophisticated capabilities such as responsive
 visualizations.
 
-\begin{figure}[ht!]
-    \centerline{\includegraphics[width=0.6\columnwidth]{mayavi_example}}
-    \caption{Simple visualization realized with Mayavi.
- \label{fig:mayavi}}
-\end{figure}
-
-
 
 \paragraph{Advanced toolkits for signal processing and data science.}
 
@@ -587,6 +590,13 @@ or Canopy, bundle together the most popular libraries, including
 \texttt{scikit-image}.
 
 \section*{Results}
+\begin{figure}[!htb]
+    \centerline{\includegraphics[width=0.6\columnwidth]{mayavi_example}}
+    \caption{\csentence{Simple 3-D visualization} realized with Mayavi.
+ \label{fig:mayavi}}
+\end{figure}
+
+
 
 \section*{Image processing capabilities}
 
@@ -621,31 +631,44 @@ or Canopy, bundle together the most popular libraries, including
 \paragraph{Capabilities.}
 
 \texttt{scikit-image} offers most classical image processing operations,
-such as exposure and color adjustment, filtering,
-segmentation, feature extraction, geometric transformations, and
-measurements of region characteristics. In addition, some advanced
+such as exposure and color adjustment, filtering, segmentation, feature
+extraction, geometric transformations, and measurements of region
+characteristics. In addition to common operations, some advanced
 algorithms are also implemented, a selection of which is illustrated in
-Fig.~\ref{fig:tomo_gallery}.  
+Fig.~\ref{fig:tomo_gallery}. In the following, we briefly illustrate how
+\texttt{scikit-image} can be used for some typical image processing
+tasks encountered when analyzing tomographic images: denoising, mid-range
+feature detection, segmentation and measurement of region properties. For
+the sake of brevity, other tasks such as contrast manipulation or
+geometric transformations are not described here; the interested reader
+is referred to the documentation of \texttt{scikit-image}.
 
 Tomographic images often suffer from artifacts or poor signal-to-noise
-ratio. Several denoising filters are available for restoring these
-images, ranging from general-purpose median and bilateral
-filters to those more suited to specific applications. For example, total-variation denoising \citep{Chambolle2004,
-Getreuer2012} is ideal for restoring piecewise-constant images (see
+ratio. Therefore, \emph{denoising} data is often the first step of an
+image processing workflow. Several denoising filters are available for
+restoring these images, ranging from general-purpose median and
+bilateral filters to those more suited to specific applications. For
+example, total-variation denoising \citep{Chambolle2004, Getreuer2012} is
+ideal for restoring piecewise-constant images (see
 Fig.~\ref{fig:tomo_gallery} a)), such as images with a small number of
 phases encountered in materials science \citep{Bouttes2015}. Conversely,
 images with a fine-grained texture are better preserved with non-local
-means denoising \citep{Buades2005} (see Fig.~\ref{fig:tomo_gallery} a)).
+means denoising, a patch-based algorithm \citep{Buades2005} (see
+Fig.~\ref{fig:tomo_gallery} a)). 
 
-\texttt{scikit-image} offers a wide variety of functions for detecting
-geometrical features of interest in an image. Peaks in 2D
-diffraction images can be extracted using blob detection methods
-\citep{Ashiotis2015}, such as the Laplacian of Gaussian method (see
-Fig.~\ref{fig:tomo_gallery} b)). In order to detect thin boundaries, the
-ridges of an image can be identified as regions for which the leading eigenvalue
-of the local Hessian matrix is high (see Fig.~\ref{fig:tomo_gallery} b)).
+Detecting the presence of objects or extracting pixels corresponding to
+objects (a task known as segmentation) is an important task of image
+analysis for medical or materials science applications.
+\texttt{scikit-image} offers a wide variety of functions for
+\emph{detecting geometrical features} of interest in an image. In order
+to detect thin boundaries, the ridges of an image can be identified as
+regions for which the leading eigenvalue of the local Hessian matrix is
+high (see Fig.~\ref{fig:tomo_gallery} b)). In the Fourier space, peaks in
+2D Bragg diffraction patterns can be extracted using blob detection
+methods \citep{Ashiotis2015}, such as the Laplacian of Gaussian method
+(see Fig.~\ref{fig:tomo_gallery} b)). 
 
-Segmentation of regions of interest can be achieved using one of various
+\emph{Segmentation} of regions of interest can be achieved using one of various
 strategies, depending on the characteristics of the image. Images with a
 clear contrast between regions can be segmented automatically thanks to
 several thresholding algorithms, including an adaptive local thresholding
@@ -660,18 +683,18 @@ Fig.~\ref{fig:tomo_gallery} c)). The active contour algorithm
 \citep{Kass1988} fits snake contours to features of the image, such as
 edges or high-brightness regions.
 
-The characteristics of labeled regions (particles, porosities, organs,
-\dots) resulting from a segmentation can be measured using the
-\texttt{measure} submodule. The different connected components (e.g.
-bubbles or non-touching particles) of a binary image are labeled with the
-\texttt{measure.label} function. Properties of labeled regions such as
-size, extent, center of mass or mean intensity value are accessed with
-\texttt{measure.regionprops} (see Fig.~\ref{fig:tomo_gallery} d)). Local
-characteristics of a region can be retrieved as well:
-Fig.~\ref{fig:tomo_gallery} d) shows how the local diameter of open
-porosity is measured by combining a skeletonization of the porosity
-channels, and the distance transform to the other phase measured on the
-skeleton.   
+Following segmentation, the characteristics of labeled regions
+(particles, porosities, organs, \dots) resulting from a segmentation can
+be measured using the \texttt{measure} submodule. The different connected
+components (e.g. bubbles or non-touching particles) of a binary image are
+labeled with the \texttt{measure.label} function. Properties of labeled
+regions such as size, extent, center of mass or mean intensity value are
+accessed with \texttt{measure.regionprops} (see
+Fig.~\ref{fig:tomo_gallery} d)). Local characteristics of a region can be
+retrieved as well: Fig.~\ref{fig:tomo_gallery} d) shows how the local
+diameter of open porosity is measured by combining a skeletonization of
+the porosity channels, and the distance transform to the other phase
+measured on the skeleton.   
 
 \paragraph{Performance.}
 
@@ -841,7 +864,7 @@ X-ray images, one should be aware of current limitations.
 \paragraph{Speed of execution.} Although \texttt{scikit-image} approaches
 the speed of execution of compiled (C++, Java) code, it cannot reach the
 performance of code optimized for the GPU, or the hand-tuned
-CPU-specific optimizations found in OpenCV. At the moment,
+CPU-specific optimizations found in OpenCV \citep{Pulli2012}. At the moment,
 \texttt{scikit-image} is not the best tool for ultrafast computations
 where the workflow is known beforehand, simple and stable. However, it is
 an excellent tool for exploring image data interactively and testing
@@ -966,6 +989,10 @@ The authors gratefully acknowledge the work of the contributors of
 % \begin{thebibliography}
 % \bibitem{b1}
 % \end{thebibliography}
+
+\newpage
+~
+\newpage
 
 \section*{Figures}
 
