@@ -615,7 +615,8 @@ or Canopy, bundle together the most popular libraries, including
 	\textbf{b) Feature extraction -} Top: Hubble deep field (NASA,
 	public domain), blob detection using the
 	Laplacian of Gaussian method. Bottom: ridge detection using the
-	leading eigenvalue of the Hessian matrix.
+	leading eigenvalue of the Hessian matrix, neuron image from
+	CREMI challenge (\url{https://cremi.org/data/}).
 	\textbf{c) Segmentation - } Top: super-pixel segmentation
 	of a CT slice of the human head \citep{tomo_wikipedia}, using
 	Felzenszwalb's algorithm \citep{Felzenszwalb2004}. Bottom: random
@@ -781,7 +782,12 @@ implementation of a more recent algorithm \citep{Darbon2008} that modifies the
 internal organization of loops, it was possible to improve execution
 time by a factor of roughly ten times.
 The large size of the \texttt{scikit-image} community makes it likely for
-algorithmic improvements to be discussed regularly.
+algorithmic improvements to be discussed regularly. During the code review
+process, a close watch is also kept on memory consumption, since for
+large image sizes, transfers between computer memory (RAM) and CPU cache
+are often a serious performance bottleneck.
+
+
 
 \section*{Documentation}
 
@@ -796,7 +802,7 @@ Function documentation is accessible online or within the development
 environment itself (IPython, Spyder, Jupyter Notebook...).
 
 \begin{figure*}
-    \centerline{\includegraphics[width=0.99\textwidth]{figure_gallery}}
+    \centerline{\includegraphics[width=0.95\textwidth]{figure_gallery}}
 \caption{\csentence{Gallery of examples of \texttt{scikit-image}.}
  The gallery of examples consists of an array of thumbnails (left), which link to example webpages, each centerered on a specific image processing task. Each webpage includes Python code generating a figure, the figure itself, and a short tutorial explaining the image processing operations and the code. \label{fig:gallery}}
 \end{figure*}
@@ -897,9 +903,9 @@ Scientists interested in experimenting with \texttt{scikit-image} are
 invited to read the installation instructions at
 \url{http://scikit-image.org/docs/stable/install.html}.
 \texttt{scikit-image} can be installed either bundled in a Scientific
-Python distribution, such as Anaconda or Canopy, or stand alone (along with its
-dependencies) using an installer/packager such as pip or Ubuntu's
-Aptitude.
+Python distribution, such as Anaconda (conda command line) or Canopy, or
+stand alone (along with its dependencies) using a installer/packager such
+as pip or Ubuntu's Aptitude.
 
 The Getting Started section of the online User Guide
 (\url{http://scikit-image.org/docs/dev/user_guide/getting_started.html})
@@ -959,7 +965,9 @@ manuscript.
 The authors gratefully acknowledge the work of the contributors of
   \texttt{scikit-image}, and thank S. Deville and D. Vandembroucq for a
   careful reading of the paper and useful suggestions. E. Gouillart
-  acknowledges the support of ANR project EDDAM ANR-11-BS09-027. 
+  acknowledges the support of ANR project EDDAM ANR-11-BS09-027. CREMI
+  (https://cremi.org/data/) is acknowledged for the membrane image of
+  Fig.~\ref{fig:tomo_gallery} (b). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%

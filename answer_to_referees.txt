@@ -1,0 +1,153 @@
+Answer to Reviewer 1
+====================
+
+* Suggest also citing http://nsls-ii.github.io/ and                  
+http://cars9.uchicago.edu/software/python/pyepics3/ along with pytango.         
+
+We have cited PyEPICS as well as NSLS-II.
+                                                                                
+* Figure 3 should use the mpl OO API instead of plt.  A gist does not
+  seem like a sufficiently stable citation target.
+
+plt is used in a lot of code examples for legacy reasons, but the OO API
+of matplotlib is indeed preferable nowadays. We have modified Figure 3
+accordingly. We generated a DOI with Zenodo for a more stable citation
+target.
+ 
+* The discussion about skimage functionality (fig 5) was very fast and
+  felt a bit disjointed.
+
+Image processing is a very broad field, and scikit-image provides a large
+variety of processing operations. Therefore, we chose to illustrate only
+a few capabilities of scikit-image, since a lengthy list would bore the
+reader, while not being very instructive. Nevertheless, the choice of
+these operations, and the link between them, might have been better
+explained. We now explain why denoising, object detection and
+measurements are important for processing microtomography images "In the
+following, we briefly illustrate how scikit-image can be used for some
+typical image processing tasks encountered when analyzing tomographic
+images: denoising, mid-range feature detection, segmentation and
+measurement of region properties. For the sake of brevity, other tasks
+such as contrast manipulation or geometric transformations are not
+described here; the interested reader is referred to the documentation
+of scikit-image.", "Denoising data is often the first step of an image
+processing workflow", "Detecting the presence of objects or extracting
+pixels corresponding to objects (a task known as segmentation) is an
+important task of image analysis for medical or materials science
+applications.". We have also improved transitions between paragraphs.
+ 
+* Given the recent discussions of system package managers vs conda/EPD vs
+  pip (ex
+http://www.curiousefficiency.org/posts/2016/09/python-packaging-ecosystem.html)
+I suggest re-wording the getting started section.
+
+Python packaging is a broad topic, that goes well beyond the scope of our
+paper. As explained in the blog post cited by the referee, different
+solutions each have their pros and cons. The purpose of the getting
+started section is mostly to give some pointers to the readers, rather
+than engaging in a discussion on packaging. For the sake of completeness,
+we now mention conda as a command-line tool for Anaconda (the most common
+use of conda).
+
+Answer to Reviewer 2
+====================
+                                                                        
+* The article "Analyzing X-ray images in Python with scikit-image"
+describes a powerful open software package which is of high use to
+analyze images. It is well written, of high importance for all people
+dealing with heavy data-image processing. Hence, I can recommend
+publication.
+
+We thank the referee for his/her positive comments about our paper.
+                                                                                
+* the title is a bit misleading as it explicitly states "X-ray images"
+  while the routines described are quite general, i.e.
+would also work for MRI or confocal laser scanning data sets, indeed,
+there is  no hard link to X-ray. Contrary, X-ray images
+are a broader term then just the microtomographic data included in this
+article: fluorescence mapping reveals X-ray images,
+each pixel contains a spectrum (hyperspectral images) - something not to
+be     considered with scikit but the mentioned PyMCA,
+i.e. the latter is a dedicated X-ray software, the same for xrdua and
+diffraction data / tomography. Especially as the journal
+title contains "Chemical Imaging" this needs to be more clear considering
+that  standard full-field X-ray imaging is a non-
+analytical tool. The referee is not the most creative person in the
+world, a    suggestion for a modification could look like that
+"Analyzing image data in Python with scikit-image: the case of
+microtomography" or similar
+
+We understand the concern of the referee, and we have changed the title
+to "Analyzing microtomography data with Python and the scikit-image
+library".
+
+
+- p. 1, l. 51 / right column: the list is a bit incomplete, as stated above,    
+xrdua could be mentioned, also in terms of volume                               
+image processing there is powerful commercial and non-commercial software we    
+should be listed here as a matter of fairness so                                
+the reader can make his own choice, i.e. AVS www.avs.com, pore3D from Elettra   
+Synchrotrone, ToolIP                                                            
+
+In addition to Aviso Fire, we now mention pore3D and ToolIP/Mavi. We also
+mention XRDUA for processing powder diffraction images. To our knowledge,
+AVS was more popular in the past that it is now in the tomography
+community, therefore we preferred to cite the most popular software only.
+
+
+- the Figures appear not ordered in the manuscript, i.e. Fig 1, Fig 4, Fig 2    
+....                                                     
+
+We apologize for this inconvenience, that is due to Latex optimizing
+float placement. This should be corrected in the publisher's layout.
+                       
+- p. 5, l. 47, left: "diffraction images" - define what precisely is considered,
+i.e. Bragg diffraction images?                                      
+
+We now say "peaks in 2D Bragg diffraction patterns".
+            
+- Fig 3 and Fig 6 the font size in the images itself are on the limit,
+  make sure they can still be read in the final article         
+
+We increased the font size in Figures 3 and 6 (modifying the layout of
+Figure 6 to this end).                            
+
+- Fig 5: for the non-synthetic data sets: could one perhaps state where the data
+was taken, i.e. in the acknowledgement? Scale                                   
+bars are also missing.
+
+Scale bars were actually omitted on purpose, since Fig. 5 is a very busy
+figure, and its interest lies mostly in the application of image
+processing operations, not in the original samples and images
+themselves.
+
+We have acknowledged the origin of the membrane image of Fig. 5 (b),
+which was the only non-synthetic image for which the origin was missing.
+                                                          
+- p. 6, l. 47 and later: for example for the Watershed it is not only           
+interesting to know the raw CPU consumption, also the                           
+memory consumption is important: at least in the early days a watershed would   
+need 16x[image size] as amount of memory to                                     
+process which was often more limiting than the CPU time, same for the euclidean 
+distance transformation                                                         
+
+The watershed algorithm implemented in scikit-image (from Soille,
+"Automated Basin Delineation from Digital Elevation Models Using
+Mathematical Morphology", Signal Processing 20 (1990) 171-182.) is much
+more memory-savvy, since it uses of the order of 5x as much memory as the
+original image size. Indeed, the algorithm does not need a lot of
+additional variables of the same size of the original image.
+
+Although scikit-image is not designed specifically for images of the size
+of tomography volumes, memory consumption is often improved and optimized
+during the code review process. We now write: "During the code review
+process, a close watch is also kept on memory consumption, since for
+large image sizes, transfers between computer memory (RAM) and CPU cache
+are often a serious performance bottleneck."
+
+- Ref Armando Sole: perhaps consider also citing the corresponding paper        
+V.A. Solé, E. Papillon, M. Cotte, Ph. Walter, J. Susini, A multiplatform code   
+for the analysis of energy-dispersive X-ray fluorescence spectra, Spectrochim.  
+Acta Part B 62 (2007) 63-68.               
+
+We are now citing this paper by Solé et al.
