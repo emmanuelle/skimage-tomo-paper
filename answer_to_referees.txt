@@ -43,8 +43,8 @@ I suggest re-wording the getting started section.
 
 Python packaging is a broad topic, that goes well beyond the scope of our
 paper. As explained in the blog post cited by the referee, different
-solutions each have their pros and cons. The purpose of the getting
-started section is mostly to give some pointers to the readers, rather
+solutions each have their pros and cons. The purpose of the "getting
+started" section is mostly to give some pointers to the readers, rather
 than engaging in a discussion on packaging. For the sake of completeness,
 we now mention conda as a command-line tool for Anaconda (the most common
 use of conda).
@@ -121,7 +121,7 @@ figure, and its interest lies mostly in the application of image
 processing operations, not in the original samples and images
 themselves.
 
-We have acknowledged the origin of the membrane image of Fig. 5 (b),
+We have acknowledged the origin of the neurons image of Fig. 5 (b),
 which was the only non-synthetic image for which the origin was missing.
                                                           
 - p. 6, l. 47 and later: for example for the Watershed it is not only           
